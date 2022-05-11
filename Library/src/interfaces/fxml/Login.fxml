@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="326.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.LoginController">
+   <children>
+      <Label fx:id="usernameLabel" layoutX="34.0" layoutY="83.0" text="Username" />
+      <Label fx:id="passwordLabel" layoutX="35.0" layoutY="156.0" text="Password" />
+      <TextField fx:id="usernameField" layoutX="29.0" layoutY="107.0" prefHeight="25.0" prefWidth="232.0" promptText="Enter your Username" />
+      <Label fx:id="titleLabel" layoutX="29.0" layoutY="22.0" text="Login" />
+      <PasswordField fx:id="passwordField" layoutX="29.0" layoutY="179.0" prefHeight="25.0" prefWidth="232.0" promptText="Enter your Password" />
+      <Label fx:id="invalidMessage" layoutX="29.0" layoutY="58.0" prefHeight="25.0" prefWidth="232.0" />
+      <Button fx:id="cancelButton" layoutX="56.0" layoutY="221.0" mnemonicParsing="false" onAction="#CancelLogin" text="Cancel" />
+      <Button fx:id="loginButton" layoutX="192.0" layoutY="228.0" mnemonicParsing="false" onAction="#Login" text="Sign In" />
+      <Hyperlink fx:id="registerLink" layoutX="129.0" layoutY="280.0" onAction="#RegisterDirect" text="Sign Up" />
+   </children>
+</AnchorPane>

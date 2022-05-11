@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="464.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.ItemController">
+   <children>
+      <MenuButton fx:id="settingsButton" layoutX="494.0" layoutY="14.0" mnemonicParsing="false" text="Settings">
+        <items>
+          <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#Login" text="Login" />
+          <MenuItem fx:id="registerButton" mnemonicParsing="false" onAction="#Register" text="Register" />
+        </items>
+      </MenuButton>
+      <Label fx:id="titleLabel" layoutX="191.0" layoutY="55.0" prefHeight="29.0" text="Title" />
+      <Button fx:id="backButton" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Label fx:id="creatorLabel" layoutX="191.0" layoutY="84.0" prefHeight="29.0" text="Author: " />
+      <Label fx:id="dateLabel" layoutX="191.0" layoutY="107.0" prefHeight="29.0" text="Release Year: " />
+      <Label fx:id="sizeLabel" layoutX="191.0" layoutY="129.0" prefHeight="29.0" text="Pages: " />
+      <Label fx:id="itemCreator" layoutX="282.0" layoutY="84.0" prefHeight="29.0" text="a" />
+      <Label fx:id="itemDate" layoutX="282.0" layoutY="107.0" prefHeight="29.0" text="b" />
+      <Label fx:id="itemSize" layoutX="283.0" layoutY="129.0" prefHeight="29.0" text="c" />
+      <Button fx:id="printButton" layoutX="184.0" layoutY="200.0" mnemonicParsing="false" onAction="#printInfo" text="Print" />
+      <Label fx:id="availableLabel" layoutX="191.0" layoutY="171.0" prefHeight="29.0" text="Available: " />
+      <Label fx:id="itemAvailable" layoutX="283.0" layoutY="171.0" prefHeight="29.0" text="e" />
+      <Label fx:id="costLabel" layoutX="191.0" layoutY="150.0" prefHeight="29.0" text="Cost:" />
+      <Label fx:id="itemCost" layoutX="283.0" layoutY="150.0" prefHeight="29.0" text="d" />
+      <Button fx:id="addToBasketButton" layoutX="271.0" layoutY="200.0" mnemonicParsing="false" onAction="#addToBasket" text="Add to Basket" />
+   </children>
+</AnchorPane>

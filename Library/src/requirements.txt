@@ -1,0 +1,30 @@
+Whilst you can choose the scenario, but it must include the following features:
+•	More than one type of item to be loaned																						********** DONE **********
+•	More than one option for each of the items																					********** DONE **********
+•	Ability to see current number of each item which is available for loan														********** DONE **********
+•	Ability to loan items
+•	Ability to return items
+•	Ability to print information about a single item to a file.  You should include the following information:					********** DONE **********
+	o	Details about the item
+	o	Number of copies available 
+	o	Number of copies on loan
+	o	Earliest return date for any items on loan
+•	Ability to search for an item																								********** NOWHERE CLOSE**********
+•	A login system, which includes:																								********** HALF DONE **********
+	o	Different account types – standard and administrator																	********** DONE **********
+	o	Ability to register with the system – subject to administrator approval													********** PARTIALL DONE **********
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Within your system, the following programming concepts must be included:
+•	Object-oriented design
+•	Inheritance 
+•	A database
+•	A Graphical User Interface (GUI)
+•	At least 1 image for each item – displaying what the item is

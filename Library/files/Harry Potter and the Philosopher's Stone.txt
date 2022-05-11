@@ -1,0 +1,10 @@
+ID: 5
+Name: Harry Potter and the Philosopher's Stone
+Genre: Action
+Cost: £4.3
+Author: JK Rowling
+Pages: 324
+Available: 3
+Loaned: 1
+Earliest Return: 03-05-2022
+Total: 4

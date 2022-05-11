@@ -1,0 +1,37 @@
+.label
+{
+	-fx-font-size: 14px;
+	-fx-font-weight: lighter;
+}
+
+.button
+{
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+	-fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.button:hover
+{
+	-fx-background-color: Gray;
+}
+
+.button:pressed
+{
+    -fx-background-color: DimGray;
+    -fx-text-fill: white;
+}
+
+#titleLabel
+{
+	-fx-font-size: 25px;
+	-fx-text-fill: #333333;
+}
+
+#invalidMessage
+{
+	-fx-font-size: 12px;
+	-fx-font-weight: normal;
+	-fx-text-fill: firebrick;
+}
