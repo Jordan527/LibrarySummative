@@ -1,2 +1,2 @@
-book and movie buttons will include add to basket button which will check if they are logged in first
+book and movie buttons will include add to basket button which will check if they are logged in first		***** DONE *****
 if logged in as admin, will add admin view option in settings and normal view if already in admin view
