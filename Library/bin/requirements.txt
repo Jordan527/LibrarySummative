@@ -23,8 +23,8 @@ Whilst you can choose the scenario, but it must include the following features:
 	
 	
 Within your system, the following programming concepts must be included:
-•	Object-oriented design
-•	Inheritance 
-•	A database
-•	A Graphical User Interface (GUI)
-•	At least 1 image for each item – displaying what the item is
+•	Object-oriented design																										********** DONE **********
+•	Inheritance 																												********** DONE **********
+•	A database																													********** DONE **********
+•	A Graphical User Interface (GUI)																							********** DONE **********
+•	At least 1 image for each item – displaying what the item is																********** DONE **********
