@@ -29,9 +29,9 @@ public class MainController {
 		{
 			library.initBooks(itemManager);
 			library.initMovies(itemManager);
-			library.initUsers(userManager);
+//			library.initUsers(userManager);
 			initialised = true;
-			this.user = userManager.getUser(1);
+//			this.user = userManager.getUser(1);
 		}
 		library.disconnect();
 	}
@@ -78,5 +78,14 @@ public class MainController {
 	{
 		int userID = user.getID();
 		library.getBasket(userID);
+	}
+	public void login(String username, String password)
+	{
+		this.user = library.Login(username, password);
+	}
+	public int existingUser(String forename, String surname, String username, String password)
+	{
+		int exists = library.existingUser(forename, surname, username, password);
+		return exists;
 	}
 }

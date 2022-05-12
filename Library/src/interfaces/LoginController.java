@@ -47,21 +47,18 @@ public class LoginController extends MainApp
 	
 	public void Login(ActionEvent event) throws Exception
 	{
-		UserManager userManager = controller.getUserManager();
-
 		String name = usernameField.getText();
 		String pass = passwordField.getText();
 		
 	
-		int index = userManager.getIndex(name, pass);
+		controller.login(name, pass);
+		Users user = controller.getUser();
 		
-		if(index == -1)
+		if(user == null)
 		{
 			invalidMessage.setText("Invalid username or password");
 		} else 
 		{
-			Users user = userManager.getUser(index);
-			controller.setUser(user);
 			sceneController.loadController(controller);
 			sceneController.switchToHome(event);
 		}

@@ -253,6 +253,112 @@ public class DbConnection {
 		}
 	}
 
+	public Users Login(String username, String password)
+	{
+		connect();
+		
+		if(opened)
+		{
+			Users user = null;
+			int id;
+	    	String forename;
+	    	String surname;
+	    	int access;
+	    	
+			try
+			{
+				System.out.println("Logging in...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.user_login(";
+	        
+	            sql += "\"" + username + "\"";
+	            sql += "," + "\"" + password + "\"" + ");";
+
+	            // execute queries
+	            ResultSet resultSet = stmt.executeQuery(sql); 
+	
+
+	            while (resultSet.next())
+	            {
+	            	id = resultSet.getInt(1);
+	            	forename = resultSet.getString(2);
+	            	surname = resultSet.getString(3);
+	            	username = resultSet.getString(4);
+	            	password = resultSet.getString(5);
+	            	access = resultSet.getInt(6);
+	            	if (access == 2)
+	            	{
+	            		user = new Admin(id, forename, surname, username, password);
+	            	} else
+	            	{
+	            		user = new Standard(id, forename, surname, username, password, access);
+	            	}
+	            }
+	            
+	            stmt.close();
+	            System.out.println("Logged in!");
+	            return user;
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+		return null;
+	}
+
+	public int existingUser(String forename, String surname, String username, String password)
+	{
+		connect();
+		
+		if(opened)
+		{	    	
+			try
+			{
+				int exists = 0;
+				System.out.println("Logging in...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.existing_user(";
+		        
+	            sql += "\"" + forename + "\"";
+	            sql += "," + "\"" + surname + "\"";
+	            sql += "," + "\"" + username + "\"";
+	            sql += "," + "\"" + password + "\"" + ");";
+
+	            // execute queries
+	            ResultSet resultSet = stmt.executeQuery(sql); 
+	
+
+	            while (resultSet.next())
+	            {
+	            	exists = 1;
+	            }
+	            
+	            stmt.close();
+	            System.out.println("Logged in!");
+	            return exists;
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+		return 0;
+	}
 	
 	public void addUser(Users user)
 	{

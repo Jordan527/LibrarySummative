@@ -57,7 +57,7 @@ public class RegisterController
 	}
 	public void Register(ActionEvent event) throws Exception
 	{
-		String exists;
+		int exists;
 		Boolean empty = emptyField();
 		String outputMessage = "";
 		
@@ -74,11 +74,11 @@ public class RegisterController
 			
 			if(password.equals(confPassword))
 			{
-				exists = userManager.existingUser(forename, surname, username, password);
+				exists = controller.existingUser(forename, surname, username, password);
 				
-				outputMessage = outputContent(exists);
+//				outputMessage = outputContent(exists);
 				
-				if (exists == "")
+				if (exists == 0)	// this section needs finalising
 				{
 					int id = userManager.newUserID();
 					Standard user = new Standard(id, forename, surname, username, password);
