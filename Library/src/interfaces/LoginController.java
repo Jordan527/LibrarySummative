@@ -62,7 +62,6 @@ public class LoginController extends MainApp
 			sceneController.loadController(controller);
 			sceneController.switchToHome(event);
 		}
-
 	}
 
 	public void CancelLogin(ActionEvent event) throws Exception
