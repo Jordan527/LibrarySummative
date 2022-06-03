@@ -8,7 +8,6 @@ import java.io.IOException;
 import database.*;
 
 public class MainController {
-	public UserManager userManager;
 	public ItemManager itemManager;
 	public DbConnection library;
 	
@@ -19,7 +18,6 @@ public class MainController {
 	public MainController()
 	{
 		library = new DbConnection();
-		userManager = new UserManager();
 		itemManager = new ItemManager();
 	}
 	public void init() throws IOException
@@ -29,9 +27,8 @@ public class MainController {
 		{
 			library.initBooks(itemManager);
 			library.initMovies(itemManager);
-//			library.initUsers(userManager);
+			login("Yorudan", "root");
 			initialised = true;
-//			this.user = userManager.getUser(1);
 		}
 		library.disconnect();
 	}
@@ -48,21 +45,13 @@ public class MainController {
 	public void setItem(Items item) {
 		this.item = item;
 	}
-	public void addUser(Users user)
+	public void addUser(String forename, String surname, String username, String password)
 	{
-		library.addUser(user);
-	}
-	public UserManager getUserManager()
-	{
-		return userManager;
+		library.addUser(forename, surname, username, password);
 	}
 	public ItemManager getItemManager()
 	{
 		return itemManager;
-	}
-	public void setUserManager(UserManager userManager)
-	{
-		this.userManager = userManager;
 	}
 	public void setItemManager(ItemManager itemManager)
 	{
@@ -72,6 +61,8 @@ public class MainController {
 	{
 		int itemID = item.getID();
 		int userID = user.getID();
+		System.out.println(userID);
+		System.out.println(itemID);
 		library.addToBasket(itemID, userID);
 	}
 	public void getBasket()

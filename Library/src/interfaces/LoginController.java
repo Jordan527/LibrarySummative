@@ -37,12 +37,10 @@ public class LoginController extends MainApp
 	
 	public MainController controller;
 	public SceneController sceneController = new SceneController();
-	public UserManager userManager;
 	
 	public void init(MainController controller)
 	{
 		this.controller = controller;
-		this.userManager = controller.getUserManager();
 	}
 	
 	public void Login(ActionEvent event) throws Exception

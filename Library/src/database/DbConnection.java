@@ -198,60 +198,6 @@ public class DbConnection {
 		}
 	}
 
-	public void initUsers(UserManager manager) 
-	{
-		String sql = "select * from view_users";
-		
-		Items item = new Items();
-    	int id;
-    	String forename;
-    	String surname;
-    	String username;
-    	String password;
-    	int access;
-    	
-    	
-		try
-		{
-			System.out.println("Initialising users...");
-            // create statement
-            stmt = connection.createStatement();
-
-            // execute queries
-            ResultSet resultSet = stmt.executeQuery(sql); 
-            
-            
-            
-            // print results
-            while (resultSet.next())
-            {
-            	id = resultSet.getInt(1);
-            	forename = resultSet.getString(2);
-            	surname = resultSet.getString(3);
-            	username = resultSet.getString(4);
-            	password = resultSet.getString(5);
-            	access = resultSet.getInt(6);
-            	if (access == 2)
-            	{
-            		Admin user = new Admin(id, forename, surname, username, password);
-            		manager.addUser(user);
-            	} else
-            	{
-            		Standard user = new Standard(id, forename, surname, username, password, access);
-            		manager.addUser(user);
-            	}
-            	
-            	
-            	System.out.println("\n");
-            }
-            stmt.close();
-            System.out.println("Users initialised!");
-		}
-		catch (SQLException sqlE)
-		{
-            System.out.println(sqlE.toString());
-		}
-	}
 
 	public Users Login(String username, String password)
 	{
@@ -360,7 +306,7 @@ public class DbConnection {
 		return 0;
 	}
 	
-	public void addUser(Users user)
+	public void addUser(String forename, String surname, String username, String password)
 	{
 		connect();
 		
@@ -375,12 +321,11 @@ public class DbConnection {
 	            
 				String sql = "call library.add_user(";
 	        
-	            sql += "\"" + user.getID() + "\"";
-	            sql += "," + "\"" + user.getForename() + "\"";
-	            sql += "," + "\"" + user.getSurname() + "\"";
-	            sql += "," + "\"" + user.getUsername()+ "\"";
-	            sql += "," + "\"" + user.getPassword() + "\"";
-	            sql += "," + "\"" + user.getAccess() + "\"" + ");";
+	            sql += "\"" + forename + "\"";
+	            sql += "," + "\"" + surname + "\"";
+	            sql += "," + "\"" + username + "\"";
+	            sql += "," + "\"" + password + "\"";
+	            sql += "," + "\"" + 0 + "\"" + ");";
 
 	            // execute queries
 	            stmt.executeUpdate(sql); 
@@ -415,8 +360,8 @@ public class DbConnection {
 	            
 				String sql = "call library.add_basket(";
 	            
-	            sql += "\"" + itemID + "\"";
-	            sql += "," + "\"" + userID + "\"" + ");";
+	            sql += "\"" + userID + "\"";
+	            sql += "," + "\"" + itemID + "\"" + ");";
 
 	            // execute queries
 	            stmt.executeUpdate(sql); 
@@ -482,5 +427,45 @@ public class DbConnection {
 				disconnect();
 			}
 		}
+	}
+	
+	public int newUserID()
+	{
+		connect();
+		
+		if(opened)
+		{
+			Users user = null;
+			int id = 0;
+	    	
+			try
+			{		
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "SELECT * FROM library.view_users;";
+
+	            // execute queries
+	            ResultSet resultSet = stmt.executeQuery(sql); 
+	
+
+	            while (resultSet.next())
+	            {
+	            	id = resultSet.getInt(1);
+	            }
+	            
+	            stmt.close();
+	            return (id + 1);
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+		return 0;
 	}
 }

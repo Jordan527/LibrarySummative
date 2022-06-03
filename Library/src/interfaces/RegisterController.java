@@ -47,13 +47,11 @@ public class RegisterController
 	
 	public SceneController sceneController = new SceneController();
 	public MainController controller;
-	public UserManager userManager;
 	
 	
 	public void init(MainController controller)
 	{
 		this.controller = controller;
-		this.userManager = controller.getUserManager();
 	}
 	public void Register(ActionEvent event) throws Exception
 	{
@@ -79,13 +77,8 @@ public class RegisterController
 //				outputMessage = outputContent(exists);
 				
 				if (exists == 0)	// this section needs finalising
-				{
-					int id = userManager.newUserID();
-					Standard user = new Standard(id, forename, surname, username, password);
-					userManager.addUser(user);
-					
-					controller.addUser(user);
-					controller.setUserManager(userManager);
+				{			
+					controller.addUser(forename, surname, username, password);
 					
 					sceneController.loadController(controller);
 					sceneController.switchToHome(event);
