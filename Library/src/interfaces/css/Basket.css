@@ -1,5 +1,53 @@
+.button
+{
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+	-fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.button:hover
+{
+	-fx-background-color: Gray;
+}
+
+.button:pressed
+{
+    -fx-background-color: DimGray;
+    -fx-text-fill: white;
+}
+
 #titleLabel
 {
 	-fx-font-size: 25px;
+	-fx-text-fill: #333333;
+}
+
+
+#moviesLabel
+{
+	-fx-font-size: 18px;
+	-fx-text-fill: #333333;
+}
+
+#ItemPane
+{
+	fx-width: 100px;
+	fx-height: 155px;
+}
+
+#ItemPane:hover
+{
+	-fx-background-color: LightBlue;
+}
+
+#ItemTitle
+{
+	-fx-max-width: 100px;
+}
+
+#booksLabel
+{
+	-fx-font-size: 18px;
 	-fx-text-fill: #333333;
 }
