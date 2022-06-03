@@ -67,6 +67,7 @@ public class ItemManager {
 	{
         Collections.sort(itemsList, Comparator.comparing(Items::getID));
 	}
+	
 	public ArrayList<Items> getBooks()
 	{
 		ArrayList<Items> bookList = new ArrayList<>();
@@ -76,7 +77,6 @@ public class ItemManager {
 			Item item = items.itemList.get(0);
 			
 			Boolean book = item instanceof Book;
-
 			if(book)
 			{
 				bookList.add(items);

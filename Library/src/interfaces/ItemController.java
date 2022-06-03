@@ -13,6 +13,8 @@ import interfaces.controller.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -41,6 +43,8 @@ public class ItemController {
 	public Label itemCost;
 	@FXML
 	public Label itemAvailable;
+	@FXML
+	public MenuButton settingsButton;
 	
 	public MainController controller;
 	public SceneController sceneController = new SceneController();
@@ -51,11 +55,7 @@ public class ItemController {
 	{
 		this.controller = controller;
 		this.item = controller.getItem();
-		if(controller.user != null)
-		{
-//			controller.user.displayAll();
-		}
-		
+		setupUser();
 		displayItem();
 		
 	}
@@ -149,6 +149,56 @@ public class ItemController {
 			controller.addToBasket(item, controller.getUser());
 		}
 	}
+	
+	public void setupUser()
+	{
+
+		MenuItem account = new MenuItem(controller.user.getUsername());
+		account.setOnAction(event -> Account());
+		
+		MenuItem basket = new MenuItem("Basket");
+		basket.setOnAction(event -> {
+			try {
+				Basket();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		MenuItem logout = new MenuItem("Logout");
+		logout.setOnAction(event -> {
+			try {
+				Logout();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		
+		settingsButton.getItems().clear();
+		settingsButton.getItems().addAll(account, basket, logout);
+	
+	}
+	
+	public void Account()
+	{
+		System.out.println(controller.user.getUsername());
+	}
+	
+	public void Logout() throws Exception
+	{
+		controller.user = null;
+		sceneController.loadController(controller);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
+	}
+	public void Basket() throws Exception
+	{
+		sceneController.loadController(controller);
+		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	
 	
 	public void Back(ActionEvent event) throws Exception
 	{

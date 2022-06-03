@@ -395,12 +395,14 @@ public class DbConnection {
 		    	double cost;
 		    	String name, genre, author, image, date;
 		    	int id, year, pages, quantity;
+		    	String name, genre, creator, image, date;
+		    	int id, year, pages, quantity, type;
 		    	Boolean available;
 				
-		    	manager.clearList();
 		    	
 	            // create statement
 	            stmt = connection.createStatement();
+	            loanStmt = connection.createStatement();
 	            
 				String sql = "call library.user_basket(";
 	            
@@ -417,8 +419,10 @@ public class DbConnection {
 	            	year = resultSet.getInt(3);
 	            	genre = resultSet.getString(4);
 	            	cost = resultSet.getDouble(5);
+	            	creator = resultSet.getString(6);
 	            	image = resultSet.getString(8);
-	            	quantity = resultSet.getInt(9);
+	            	type = resultSet.getInt(9);
+	            	quantity = resultSet.getInt(10); 
 	            	
 	            	item = new Items(id, name, year, image, genre, cost);
 	        		manager.addItem(item);
@@ -426,29 +430,48 @@ public class DbConnection {
 	        		String sql2 = "call product_loaned(" + id + ")";
 	        		ResultSet basket = loanStmt.executeQuery(sql2);
 	        		
-	        
-	        		
-	        		for(int i = 0; i < quantity; i++)
+	        		if(type == 1)
 	        		{
-	        			available = true;
-	        			date = null;
-	        			if(basket.next())
-	        			{
-	        				available = false;
-	        				Date copyDate = basket.getDate(1);
-	        				date = simpleDateFormat.format(copyDate);
-	        			}
-	            		id = resultSet.getInt(1);
-	            		author = resultSet.getString(6);
-	                	pages = resultSet.getInt(7);
-	                	
-	                	Book copy = new Book(id, author, pages, available, date);
-	                	manager.addCopy(copy);
+		        		for(int i = 0; i < quantity; i++)
+		        		{
+		        			available = true;
+		        			date = null;
+		        			if(basket.next())
+		        			{
+		        				available = false;
+		        				Date copyDate = basket.getDate(1);
+		        				date = simpleDateFormat.format(copyDate);
+		        			}
+		            		id = resultSet.getInt(1);
+		                	pages = resultSet.getInt(7);
+		                	
+		                	Book copy = new Book(id, creator, pages, available, date);
+		                	manager.addCopy(copy);
+		        		}
+	        		} else
+	        		{
+	            		for(int i = 0; i < quantity; i++)
+	            		{
+	            			available = true;
+	            			date = null;
+	            			if(basket.next())
+	            			{
+	            				available = false;
+	            				Date copyDate = basket.getDate(1);
+	            				date = simpleDateFormat.format(copyDate);
+	            			}
+	    	        		id = resultSet.getInt(1);
+	    	            	duration = resultSet.getDouble(7);
+
+	    	            	Movie copy = new Movie(id, creator, duration, available, date);
+	    	            	manager.addCopy(copy);
+	            		}
 	        		}
 	            }
 
 	            stmt.close();
-	            System.out.println("Basker Retrieved!");
+	            loanStmt.close();
+	            System.out.println("Basket Retrieved!");
 			}
 			catch (SQLException sqlE)
 			{

@@ -9,6 +9,7 @@ import interfaces.controller.*;
 import items.Book;
 import items.ItemManager;
 import items.Items;
+import items.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -28,6 +29,11 @@ public class BasketController {
 	public Label moviesLabel;
 	@FXML
 	public MenuButton settingsButton;
+	@FXML
+	public Pane bookPane;
+	@FXML
+	public Pane moviePane;
+	
 	
 	public MainController controller;
 	public ItemManager itemManager;
@@ -36,26 +42,24 @@ public class BasketController {
 	public void init(MainController controller) throws IOException
 	{
 		this.controller = controller;
+		controller.getBasket();
 		this.itemManager = controller.getItemManager();
 		setupUser();
 		displayBasket();
 	}
 	
-	public void displayBasket() throws IOException
+	public void displayBasket()
 	{
-		controller.getBasket();
-//		addBooks();
-		
+		addBooks();
+		moviePane.setLayoutY(290);
+		addMovies();
 	}
 	
 	public void addBooks()
-	{
-		Pane pane =  (Pane) booksLabel.getParent();
-		
+	{		
 		ArrayList<Items> booksList = itemManager.getBooks();
 		int x = 5;
 		int y = 23;
-		
 		
 		for(Items item : booksList)
 		{
@@ -69,8 +73,8 @@ public class BasketController {
 			Label title = new Label(item.getName());
 			Label author = new Label(copy.getAuthor());
 			Label date = new Label("" + item.getRelease());
-			Label cost = new Label(item.getCostOutput());
-			
+			Label quantity = new Label("Quantity: " + item.getQuantity());
+			Label cost = new Label(item.getTotalCostOutput());
 			
 			imageView.setX(0);
 			imageView.setY(0);
@@ -85,8 +89,11 @@ public class BasketController {
 			date.setLayoutX(0);
 			date.setLayoutY(140);
 			
+			quantity.setLayoutX(0);
+			quantity.setLayoutY(155);
+			
 			cost.setLayoutX(0);
-			cost.setLayoutY(155);
+			cost.setLayoutY(170);
 			
 			Pane itemPane = new Pane();
 			itemPane.setId("ItemPane");
@@ -101,8 +108,70 @@ public class BasketController {
 				}
 			});
 			
-			itemPane.getChildren().addAll(imageView, title, author, date, cost);			
-			pane.getChildren().add(itemPane);
+			itemPane.getChildren().addAll(imageView, title, author, date, quantity, cost);			
+			bookPane.getChildren().add(itemPane);
+			
+			x += 110;
+		}
+	}
+	
+	public void addMovies()
+	{
+		ArrayList<Items> moviesList = itemManager.getMovies();
+		int x = 5;
+		int y = 23;
+		
+		
+		for(Items item : moviesList)
+		{
+			Movie copy = (Movie) item.getItem();
+			
+			ImageView imageView = loadImage(item.getImage());
+			imageView.setFitWidth(80);
+			imageView.setFitHeight(110);
+			
+			
+			Label title = new Label(item.getName());
+			Label director = new Label(copy.getDirector());
+			Label date = new Label("" + item.getRelease());
+			Label quantity = new Label("Quantity: " + item.getQuantity());
+			Label cost = new Label(item.getTotalCostOutput());
+			
+			
+			imageView.setX(0);
+			imageView.setY(0);
+			
+			title.setId("ItemTitle");
+			title.setLayoutX(0);
+			title.setLayoutY(110);
+			
+			director.setLayoutX(0);
+			director.setLayoutY(125);
+			
+			date.setLayoutX(0);
+			date.setLayoutY(140);
+			
+			quantity.setLayoutX(0);
+			quantity.setLayoutY(155);
+			
+			cost.setLayoutX(0);
+			cost.setLayoutY(170);
+			
+			Pane itemPane = new Pane();
+			itemPane.setId("ItemPane");
+			itemPane.setLayoutX(x);
+			itemPane.setLayoutY(y);
+			itemPane.setOnMouseClicked(event -> {
+				try {
+					itemSelected(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			
+			itemPane.getChildren().addAll(imageView, title, director, date, quantity, cost);			
+			moviePane.getChildren().add(itemPane);
 			
 			x += 110;
 		}
@@ -127,6 +196,15 @@ public class BasketController {
 		Image image = new Image(inputStream);
 		ImageView imageView = new ImageView(image);
 		return imageView;
+	}
+	
+	public void Back(ActionEvent event) throws Exception
+	{
+		itemManager.clearList();
+		controller.setItemManager(itemManager);
+		controller.init();
+		sceneController.loadController(controller);
+		sceneController.switchToHome(event);
 	}
 	
 	public void setupUser()

@@ -68,7 +68,8 @@ public class MainController {
 	public void getBasket() throws IOException
 	{
 		int userID = user.getID();
-		library.getBasketBooks(userID, itemManager);
+		itemManager.clearList();
+		library.getBasket(userID, itemManager);
 	}
 	public void login(String username, String password)
 	{

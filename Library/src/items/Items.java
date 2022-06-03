@@ -104,7 +104,16 @@ public class Items {
 		String output = "£" + String.format("%.2f", cost);
 		return output;
 	}
-	
+	public String getTotalCostOutput()
+	{
+		double totalCost = cost * getQuantity();
+		String output = "£" + String.format("%.2f", totalCost);
+		return output;
+	}
+	public int getQuantity()
+	{
+		return itemList.size();
+	}
 	
 	public int totalLoaned()
 	{
