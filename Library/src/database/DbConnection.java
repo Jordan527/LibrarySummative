@@ -381,7 +381,7 @@ public class DbConnection {
 		}
 	}
 	
-	public void getBasket(int userID)
+	public void getBasketBooks(int userID, ItemManager manager) throws IOException
 	{
 		connect();
 		
@@ -391,6 +391,14 @@ public class DbConnection {
 			{
 				System.out.println("Getting basket...");
 				
+				Items item = new Items();
+		    	double cost;
+		    	String name, genre, author, image, date;
+		    	int id, year, pages, quantity;
+		    	Boolean available;
+				
+		    	manager.clearList();
+		    	
 	            // create statement
 	            stmt = connection.createStatement();
 	            
@@ -398,21 +406,45 @@ public class DbConnection {
 	            
 	            sql += "\"" + userID + "\"" + ");";
 
-	            int productID;
-	            int quantity;
 	            
 	            // execute queries
 	            ResultSet resultSet = stmt.executeQuery(sql); 
 	            
 	            while (resultSet.next())
 	            {
-	            	productID = resultSet.getInt(1);
-	            	quantity = resultSet.getInt(2);
+	            	id = resultSet.getInt(1);
+	            	name = resultSet.getString(2);
+	            	year = resultSet.getInt(3);
+	            	genre = resultSet.getString(4);
+	            	cost = resultSet.getDouble(5);
+	            	image = resultSet.getString(8);
+	            	quantity = resultSet.getInt(9);
 	            	
-	            	System.out.println("User ID: " + userID +
-	            						"\nProduct ID: " + productID +
-	            						"\nQuantity: " + quantity + "\n");
-	            	
+	            	item = new Items(id, name, year, image, genre, cost);
+	        		manager.addItem(item);
+	        		
+	        		String sql2 = "call product_loaned(" + id + ")";
+	        		ResultSet basket = loanStmt.executeQuery(sql2);
+	        		
+	        
+	        		
+	        		for(int i = 0; i < quantity; i++)
+	        		{
+	        			available = true;
+	        			date = null;
+	        			if(basket.next())
+	        			{
+	        				available = false;
+	        				Date copyDate = basket.getDate(1);
+	        				date = simpleDateFormat.format(copyDate);
+	        			}
+	            		id = resultSet.getInt(1);
+	            		author = resultSet.getString(6);
+	                	pages = resultSet.getInt(7);
+	                	
+	                	Book copy = new Book(id, author, pages, available, date);
+	                	manager.addCopy(copy);
+	        		}
 	            }
 
 	            stmt.close();
@@ -427,6 +459,7 @@ public class DbConnection {
 				disconnect();
 			}
 		}
+		
 	}
 	
 	public int newUserID()

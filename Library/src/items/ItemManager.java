@@ -9,6 +9,11 @@ public class ItemManager {
 	{
 		itemsList = new ArrayList<>();
 	}
+ 	
+ 	public void clearList()
+ 	{
+ 		this.itemsList = new ArrayList<>();
+ 	}
 	
 	
 	public void addItem(Items items)

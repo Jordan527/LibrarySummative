@@ -2,6 +2,7 @@ package interfaces;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import interfaces.controller.*;
@@ -32,18 +33,18 @@ public class BasketController {
 	public ItemManager itemManager;
 	public SceneController sceneController = new SceneController();
 	
-	public void init(MainController controller)
+	public void init(MainController controller) throws IOException
 	{
 		this.controller = controller;
 		this.itemManager = controller.getItemManager();
 		setupUser();
-		addBooks();
+		displayBasket();
 	}
 	
-	public void displayBasket()
+	public void displayBasket() throws IOException
 	{
 		controller.getBasket();
-		Pane pane =  (Pane) titleLabel.getParent();
+//		addBooks();
 		
 	}
 	

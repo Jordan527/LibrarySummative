@@ -65,10 +65,10 @@ public class MainController {
 		System.out.println(itemID);
 		library.addToBasket(itemID, userID);
 	}
-	public void getBasket()
+	public void getBasket() throws IOException
 	{
 		int userID = user.getID();
-		library.getBasket(userID);
+		library.getBasketBooks(userID, itemManager);
 	}
 	public void login(String username, String password)
 	{
