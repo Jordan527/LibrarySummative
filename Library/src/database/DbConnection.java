@@ -381,7 +381,7 @@ public class DbConnection {
 		}
 	}
 	
-	public void getBasketBooks(int userID, ItemManager manager) throws IOException
+	public void getBasket(int userID, ItemManager manager) throws IOException
 	{
 		connect();
 		
@@ -392,13 +392,10 @@ public class DbConnection {
 				System.out.println("Getting basket...");
 				
 				Items item = new Items();
-		    	double cost;
-		    	String name, genre, author, image, date;
-		    	int id, year, pages, quantity;
+		    	double cost, duration;
 		    	String name, genre, creator, image, date;
 		    	int id, year, pages, quantity, type;
 		    	Boolean available;
-				
 		    	
 	            // create statement
 	            stmt = connection.createStatement();
