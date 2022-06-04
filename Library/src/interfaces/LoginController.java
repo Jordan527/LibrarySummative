@@ -58,19 +58,19 @@ public class LoginController extends MainApp
 		} else 
 		{
 			sceneController.loadController(controller);
-			sceneController.switchToHome(event);
+			sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 		}
 	}
 
 	public void CancelLogin(ActionEvent event) throws Exception
 	{
 		sceneController.loadController(controller);
-		sceneController.switchToHome(event);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void RegisterDirect(ActionEvent event) throws Exception
 	{
 		sceneController.loadController(controller);
-		sceneController.switchToRegister(event);
+		sceneController.switchToRegister((Stage) titleLabel.getScene().getWindow());
 	}
 }

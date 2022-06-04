@@ -146,7 +146,7 @@ public class ItemController {
 		if(controller.user == null)
 		{
 			sceneController.loadController(controller);
-			sceneController.switchToLogin(event);
+			sceneController.switchToLogin((Stage) titleLabel.getScene().getWindow());
 		} else
 		{
 			controller.addToBasket(item);
@@ -221,7 +221,7 @@ public class ItemController {
 	public void Back(ActionEvent event) throws Exception
 	{
 		sceneController.loadController(controller);
-		sceneController.switchToHome(event);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void Login(ActionEvent event) throws Exception

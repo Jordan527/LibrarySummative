@@ -81,7 +81,7 @@ public class RegisterController
 					controller.addUser(forename, surname, username, password);
 					
 					sceneController.loadController(controller);
-					sceneController.switchToHome(event);
+					sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 				}
 			} else
 			{
@@ -157,13 +157,13 @@ public class RegisterController
 	public void CancelRegister(ActionEvent event) throws Exception
 	{
 		sceneController.loadController(controller);
-		sceneController.switchToHome(event);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void LoginRedirect(ActionEvent event) throws Exception 
 	{
 		sceneController.loadController(controller);
-		sceneController.switchToLogin(event);
+		sceneController.switchToLogin((Stage) titleLabel.getScene().getWindow());
 	}
 	
 }

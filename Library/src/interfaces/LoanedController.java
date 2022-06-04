@@ -227,7 +227,7 @@ public class LoanedController {
 		controller.setItemManager(itemManager);
 		controller.init();
 		sceneController.loadController(controller);
-		sceneController.switchToHome(event);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	
