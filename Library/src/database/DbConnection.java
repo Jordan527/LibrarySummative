@@ -2,6 +2,8 @@ package database;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Calendar;
+import java.util.Date;  
 import java.text.SimpleDateFormat;
 
 import items.*;
@@ -380,6 +382,137 @@ public class DbConnection {
 			}
 		}
 	}
+
+	public void removeFromBasket(int itemID, int userID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Removing an item from the basket...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.remove_basket(";
+	            
+	            sql += "\"" + userID + "\"";
+	            sql += "," + "\"" + itemID + "\"" + ");";
+
+	            // execute queries
+	            stmt.executeUpdate(sql); 
+	
+
+	            stmt.close();
+	            System.out.println("Item Removed!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+	}
+	
+	public void deleteFromBasket(int itemID, int userID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Deleting an item from the basket...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.delete_basket(";
+	            
+	            sql += "\"" + userID + "\"";
+	            sql += "," + "\"" + itemID + "\"" + ");";
+
+	            // execute queries
+	            stmt.executeUpdate(sql); 
+	
+
+	            stmt.close();
+	            System.out.println("Item Deleted!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+	}
+	
+	public void order(ItemManager manager, int userID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Loaning Items...");
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+			    Date currentDate = new Date(); 
+			    
+			    Calendar c = Calendar.getInstance();
+		        c.setTime(currentDate);
+		        c.add(Calendar.DATE, 30);
+		        
+		        Date rawDate = c.getTime();
+			    String date = formatter.format(rawDate);
+
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+	            for (Items item : manager.getAll())
+	            {
+	            	int itemID = item.getID();
+	            	
+	            	for(int i = 0; i < item.getQuantity(); i ++)
+	            	{
+		            	String sql = "call library.add_loaned(";
+			            
+			            sql += "\"" + itemID + "\"";
+			            sql += "," + "\"" + userID + "\"";
+			            sql += "," + "\"" + date + "\"" + ");";
+
+			            // execute queries
+			            stmt.executeUpdate(sql); 
+	            	}
+
+	            }
+	            
+
+	
+
+	            stmt.close();
+	            System.out.println("Items Loaned!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+	}
 	
 	public void getBasket(int userID, ItemManager manager) throws IOException
 	{
@@ -425,7 +558,7 @@ public class DbConnection {
 	        		manager.addItem(item);
 	        		
 	        		String sql2 = "call product_loaned(" + id + ")";
-	        		ResultSet basket = loanStmt.executeQuery(sql2);
+	        		ResultSet laoned = loanStmt.executeQuery(sql2);
 	        		
 	        		if(type == 1)
 	        		{
@@ -433,10 +566,10 @@ public class DbConnection {
 		        		{
 		        			available = true;
 		        			date = null;
-		        			if(basket.next())
+		        			if(laoned.next())
 		        			{
 		        				available = false;
-		        				Date copyDate = basket.getDate(1);
+		        				Date copyDate = laoned.getDate(1);
 		        				date = simpleDateFormat.format(copyDate);
 		        			}
 		            		id = resultSet.getInt(1);
@@ -451,10 +584,10 @@ public class DbConnection {
 	            		{
 	            			available = true;
 	            			date = null;
-	            			if(basket.next())
+	            			if(laoned.next())
 	            			{
 	            				available = false;
-	            				Date copyDate = basket.getDate(1);
+	            				Date copyDate = laoned.getDate(1);
 	            				date = simpleDateFormat.format(copyDate);
 	            			}
 	    	        		id = resultSet.getInt(1);

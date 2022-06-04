@@ -57,13 +57,28 @@ public class MainController {
 	{
 		this.itemManager = itemManager;
 	}
-	public void addToBasket(Items item, Users user)
+	public void addToBasket(Items item)
 	{
 		int itemID = item.getID();
-		int userID = user.getID();
-		System.out.println(userID);
-		System.out.println(itemID);
+		int userID = this.user.getID();
 		library.addToBasket(itemID, userID);
+	}
+	public void removeFromBasket(Items item)
+	{
+		int itemID = item.getID();
+		int userID = this.user.getID();
+		library.removeFromBasket(itemID, userID);
+	}
+	public void deleteFromBasket(Items item)
+	{
+		int itemID = item.getID();
+		int userID = this.user.getID();
+		library.deleteFromBasket(itemID, userID);
+	}
+	public void order()
+	{
+		int userID = this.user.getID();
+		library.order(itemManager, userID);
 	}
 	public void getBasket() throws IOException
 	{

@@ -103,7 +103,36 @@ public class ItemManager {
 		
 		return movieList;
 	}
+	public ArrayList<Items> getAll()
+	{
+		return itemsList;
+	}
 	
+	public String getTotalCostOutput()
+	{
+		String output;
+		double total = 0;
+		
+		for(Items item : itemsList)
+		{
+			total += (item.getQuantity() * item.getCost());
+		}
+		
+		output = "£" + String.format("%.2f", total);
+		return output;
+	}
+	
+	public int getTotalQuantity()
+	{
+		int total = 0;
+		
+		for(Items item : itemsList)
+		{
+			total += item.getQuantity();
+		}
+		
+		return total;
+	}
 	
 	public void displayAll()
 	{

@@ -16,16 +16,17 @@
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <Pane fx:id="bookPane" layoutX="22.0" layoutY="78.0" prefHeight="146.0" prefWidth="340.0">
+      <Pane fx:id="bookPane" layoutX="20.0" layoutY="78.0" prefHeight="146.0" prefWidth="340.0">
          <children>
             <Label fx:id="booksLabel" layoutX="0" layoutY="0" text="Books" />
          </children>
       </Pane>
-      <Pane fx:id="moviePane" layoutX="23.0" layoutY="224.0" prefHeight="146.0" prefWidth="340.0">
+      <Pane fx:id="moviePane" layoutX="20.0" layoutY="224.0" prefHeight="146.0" prefWidth="340.0">
          <children>
             <Label fx:id="moviesLabel" layoutX="0" layoutY="0" text="Movies" />
          </children>
       </Pane>
       <Button fx:id="backButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Button fx:id="orderButton" layoutX="280.0" layoutY="442.0" mnemonicParsing="false" onAction="#Order" text="Order" />
    </children>
 </AnchorPane>

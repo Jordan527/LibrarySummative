@@ -114,7 +114,7 @@ public class Items {
 	{
 		return itemList.size();
 	}
-	
+
 	public int totalLoaned()
 	{
 		int total = itemList.size() - available;

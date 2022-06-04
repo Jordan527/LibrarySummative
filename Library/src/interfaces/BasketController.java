@@ -12,6 +12,7 @@ import items.Items;
 import items.Movie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -33,7 +34,8 @@ public class BasketController {
 	public Pane bookPane;
 	@FXML
 	public Pane moviePane;
-	
+	@FXML
+	public Button orderButton;
 	
 	public MainController controller;
 	public ItemManager itemManager;
@@ -51,11 +53,38 @@ public class BasketController {
 	public void displayBasket()
 	{
 		addBooks();
-		moviePane.setLayoutY(290);
+		
+		int books = itemManager.getBooks().size();
+		int y = 100;
+		
+		if (books > 0)
+		{
+			y += books * 130;
+		}
+		else
+		{
+			y += 20;
+		}
+		
+		moviePane.setLayoutY(y);
 		addMovies();
+		
+		int movies = itemManager.getMovies().size();
+		y += 23;
+		
+		if (movies > 0)
+		{
+			y += movies * 130;
+		}
+		else
+		{
+			y += 20;
+		}
+		
+		addTotal(y);
 	}
 	
-	public void addBooks()
+	public int addBooks()
 	{		
 		ArrayList<Items> booksList = itemManager.getBooks();
 		int x = 5;
@@ -67,33 +96,107 @@ public class BasketController {
 			
 			ImageView imageView = loadImage(item.getImage());
 			imageView.setFitWidth(80);
-			imageView.setFitHeight(110);
+			imageView.setFitHeight(120);
+			
+			
+			Label titleHead = new Label("Title");
+			Label authorHead = new Label("Author");	
+			Label dateHead = new Label("Date");		
+			Label quantityHead = new Label("Quantity");		
+			Label costHead = new Label("Cost");
+			Label totalCostHead = new Label("Total Cost");
 			
 			
 			Label title = new Label(item.getName());
 			Label author = new Label(copy.getAuthor());
 			Label date = new Label("" + item.getRelease());
-			Label quantity = new Label("Quantity: " + item.getQuantity());
-			Label cost = new Label(item.getTotalCostOutput());
+			Label quantity = new Label("" + item.getQuantity());
+			Label cost = new Label(item.getCostOutput());
+			Label totalCost = new Label(item.getTotalCostOutput());
+			
+			Button deleteButton = new Button("Delete");
+			Button removeButton = new Button("-");
+			Button addButton = new Button("+");
 			
 			imageView.setX(0);
 			imageView.setY(0);
 			
+			titleHead.setId("itemHeader");
+			titleHead.setLayoutX(85);
+			titleHead.setLayoutY(0);
+			
 			title.setId("ItemTitle");
-			title.setLayoutX(0);
-			title.setLayoutY(110);
+			title.setLayoutX(85);
+			title.setLayoutY(20);
 			
-			author.setLayoutX(0);
-			author.setLayoutY(125);
+			authorHead.setId("itemHeader");
+			authorHead.setLayoutX(85);
+			authorHead.setLayoutY(40);
 			
-			date.setLayoutX(0);
-			date.setLayoutY(140);
+			author.setLayoutX(85);
+			author.setLayoutY(60);
 			
-			quantity.setLayoutX(0);
-			quantity.setLayoutY(155);
+			dateHead.setId("itemHeader");
+			dateHead.setLayoutX(85);
+			dateHead.setLayoutY(80);
 			
-			cost.setLayoutX(0);
-			cost.setLayoutY(170);
+			date.setLayoutX(85);
+			date.setLayoutY(100);
+			
+			quantityHead.setId("itemHeader");
+			quantityHead.setLayoutX(265);
+			quantityHead.setLayoutY(0);
+			
+			quantity.setLayoutX(265);
+			quantity.setLayoutY(20);
+			
+			costHead.setId("itemHeader");
+			costHead.setLayoutX(265);
+			costHead.setLayoutY(40);
+			
+			cost.setLayoutX(265);
+			cost.setLayoutY(60);
+			
+			totalCostHead.setId("itemHeader");
+			totalCostHead.setLayoutX(265);
+			totalCostHead.setLayoutY(80);
+			
+			totalCost.setLayoutX(265);
+			totalCost.setLayoutY(100);
+			
+			removeButton.setLayoutX(310);
+			removeButton.setLayoutY(40);
+			removeButton.setOnAction(event -> {
+				try {
+					RemoveItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
+			
+			addButton.setLayoutX(380);
+			addButton.setLayoutY(40);
+			addButton.setOnAction(event -> {
+				try {
+					AddItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
+			
+			deleteButton.setLayoutX(330);
+			deleteButton.setLayoutY(40);
+			deleteButton.setOnAction(event -> {
+				try {
+					DeleteItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
+			
 			
 			Pane itemPane = new Pane();
 			itemPane.setId("ItemPane");
@@ -108,11 +211,14 @@ public class BasketController {
 				}
 			});
 			
-			itemPane.getChildren().addAll(imageView, title, author, date, quantity, cost);			
+			itemPane.getChildren().addAll(titleHead, authorHead, dateHead, quantityHead, costHead, totalCostHead);
+			itemPane.getChildren().addAll(imageView, title, author, date, quantity, cost, totalCost);
+			itemPane.getChildren().addAll(removeButton, addButton, deleteButton);
 			bookPane.getChildren().add(itemPane);
 			
-			x += 110;
+			y += 130;
 		}
+		return booksList.size();
 	}
 	
 	public void addMovies()
@@ -128,34 +234,106 @@ public class BasketController {
 			
 			ImageView imageView = loadImage(item.getImage());
 			imageView.setFitWidth(80);
-			imageView.setFitHeight(110);
+			imageView.setFitHeight(120);
+			
+			
+			Label titleHead = new Label("Title");
+			Label directorHead = new Label("Author");	
+			Label dateHead = new Label("Date");		
+			Label quantityHead = new Label("Quantity");		
+			Label costHead = new Label("Cost");
+			Label totalCostHead = new Label("Total Cost");
 			
 			
 			Label title = new Label(item.getName());
 			Label director = new Label(copy.getDirector());
 			Label date = new Label("" + item.getRelease());
-			Label quantity = new Label("Quantity: " + item.getQuantity());
-			Label cost = new Label(item.getTotalCostOutput());
+			Label quantity = new Label("" + item.getQuantity());
+			Label cost = new Label(item.getCostOutput());
+			Label totalCost = new Label(item.getTotalCostOutput());
 			
+			Button deleteButton = new Button("Delete");
+			Button removeButton = new Button("-");
+			Button addButton = new Button("+");
 			
 			imageView.setX(0);
 			imageView.setY(0);
 			
+			titleHead.setId("itemHeader");
+			titleHead.setLayoutX(85);
+			titleHead.setLayoutY(0);
+			
 			title.setId("ItemTitle");
-			title.setLayoutX(0);
-			title.setLayoutY(110);
+			title.setLayoutX(85);
+			title.setLayoutY(20);
 			
-			director.setLayoutX(0);
-			director.setLayoutY(125);
+			directorHead.setId("itemHeader");
+			directorHead.setLayoutX(85);
+			directorHead.setLayoutY(40);
 			
-			date.setLayoutX(0);
-			date.setLayoutY(140);
+			director.setLayoutX(85);
+			director.setLayoutY(60);
 			
-			quantity.setLayoutX(0);
-			quantity.setLayoutY(155);
+			dateHead.setId("itemHeader");
+			dateHead.setLayoutX(85);
+			dateHead.setLayoutY(80);
 			
-			cost.setLayoutX(0);
-			cost.setLayoutY(170);
+			date.setLayoutX(85);
+			date.setLayoutY(100);
+			
+			quantityHead.setId("itemHeader");
+			quantityHead.setLayoutX(265);
+			quantityHead.setLayoutY(0);
+			
+			quantity.setLayoutX(265);
+			quantity.setLayoutY(20);
+			
+			costHead.setId("itemHeader");
+			costHead.setLayoutX(265);
+			costHead.setLayoutY(40);
+			
+			cost.setLayoutX(265);
+			cost.setLayoutY(60);
+			
+			totalCostHead.setId("itemHeader");
+			totalCostHead.setLayoutX(265);
+			totalCostHead.setLayoutY(80);
+			
+			totalCost.setLayoutX(265);
+			totalCost.setLayoutY(100);
+			
+			removeButton.setLayoutX(310);
+			removeButton.setLayoutY(40);
+			removeButton.setOnAction(event -> {
+				try {
+					RemoveItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
+			
+			addButton.setLayoutX(380);
+			addButton.setLayoutY(40);
+			addButton.setOnAction(event -> {
+				try {
+					AddItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
+			
+			deleteButton.setLayoutX(330);
+			deleteButton.setLayoutY(40);
+			deleteButton.setOnAction(event -> {
+				try {
+					DeleteItem(item);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			});
 			
 			Pane itemPane = new Pane();
 			itemPane.setId("ItemPane");
@@ -170,11 +348,41 @@ public class BasketController {
 				}
 			});
 			
-			itemPane.getChildren().addAll(imageView, title, director, date, quantity, cost);			
+			itemPane.getChildren().addAll(titleHead, directorHead, dateHead, quantityHead, costHead, totalCostHead);
+			itemPane.getChildren().addAll(imageView, title, director, date, quantity, cost, totalCost);
+			itemPane.getChildren().addAll(removeButton, addButton, deleteButton);
 			moviePane.getChildren().add(itemPane);
 			
-			x += 110;
+			y += 130;
 		}
+	}
+	
+	public void addTotal(int y)
+	{
+		Pane pane = (Pane) titleLabel.getParent();
+		
+		Label itemsHead = new Label("Items: ");
+		Label totalHead = new Label("Total: ");
+		
+		Label items = new Label("" + itemManager.getTotalQuantity());
+		Label total = new Label(itemManager.getTotalCostOutput());
+		
+		itemsHead.setId("itemHeader");
+		itemsHead.setLayoutX(110);
+		itemsHead.setLayoutY(y);
+		
+		items.setLayoutX(150);
+		items.setLayoutY(y);
+		
+		totalHead.setId("itemHeader");
+		totalHead.setLayoutX(175);
+		totalHead.setLayoutY(y);
+		
+		total.setLayoutX(215);
+		total.setLayoutY(y);
+		
+		pane.getChildren().addAll(itemsHead, items, totalHead, total);
+		orderButton.setLayoutY(y-5);
 	}
 	
 	public void itemSelected(Items item) throws Exception
@@ -182,6 +390,11 @@ public class BasketController {
 		controller.setItem(item);
 		sceneController.loadController(controller);
 		sceneController.switchToItem((Stage) titleLabel.getScene().getWindow());
+	}
+	
+	public void itemAdded(Items item) throws Exception
+	{
+		controller.addToBasket(item);
 	}
 	
 	public ImageView loadImage(String source)
@@ -205,6 +418,30 @@ public class BasketController {
 		controller.init();
 		sceneController.loadController(controller);
 		sceneController.switchToHome(event);
+	}
+	
+	public void AddItem(Items item) throws Exception
+	{
+		controller.addToBasket(item);
+		sceneController.loadController(controller);
+		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	public void RemoveItem(Items item) throws Exception
+	{
+		controller.removeFromBasket(item);
+		sceneController.loadController(controller);
+		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	public void DeleteItem(Items item) throws Exception
+	{
+		controller.deleteFromBasket(item);
+		sceneController.loadController(controller);
+		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	
+	public void Order(ActionEvent event) throws Exception
+	{
+		controller.order();
 	}
 	
 	public void setupUser()

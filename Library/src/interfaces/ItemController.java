@@ -146,7 +146,7 @@ public class ItemController {
 			sceneController.switchToLogin(event);
 		} else
 		{
-			controller.addToBasket(item, controller.getUser());
+			controller.addToBasket(item);
 		}
 	}
 	
