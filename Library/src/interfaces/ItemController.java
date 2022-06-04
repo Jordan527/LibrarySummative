@@ -55,7 +55,10 @@ public class ItemController {
 	{
 		this.controller = controller;
 		this.item = controller.getItem();
-		setupUser();
+		if(controller.user != null)
+		{
+			setupUser();
+		}
 		displayItem();
 		
 	}
@@ -166,6 +169,16 @@ public class ItemController {
 			}
 		});
 		
+		MenuItem loaned = new MenuItem("Loaned");
+		loaned.setOnAction(event -> {
+			try {
+				Loaned();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
 		MenuItem logout = new MenuItem("Logout");
 		logout.setOnAction(event -> {
 			try {
@@ -178,7 +191,7 @@ public class ItemController {
 		
 		
 		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, logout);
+		settingsButton.getItems().addAll(account, basket, loaned, logout);
 	
 	}
 	
@@ -197,6 +210,11 @@ public class ItemController {
 	{
 		sceneController.loadController(controller);
 		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	public void Loaned() throws Exception
+	{
+		sceneController.loadController(controller);
+		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	

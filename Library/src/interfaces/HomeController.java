@@ -65,6 +65,16 @@ public class HomeController {
 			}
 		});
 		
+		MenuItem loaned = new MenuItem("Loaned");
+		loaned.setOnAction(event -> {
+			try {
+				Loaned();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
 		MenuItem logout = new MenuItem("Logout");
 		logout.setOnAction(event -> {
 			try {
@@ -77,7 +87,7 @@ public class HomeController {
 		
 		
 		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, logout);
+		settingsButton.getItems().addAll(account, basket, loaned, logout);
 	
 	}
 	
@@ -220,6 +230,12 @@ public class HomeController {
 		controller.setItem(item);
 		sceneController.loadController(controller);
 		sceneController.switchToItem((Stage) titleLabel.getScene().getWindow());
+	}
+	
+	public void Loaned() throws Exception
+	{
+		sceneController.loadController(controller);
+		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void Account()

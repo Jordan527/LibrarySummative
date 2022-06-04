@@ -1,0 +1,41 @@
+#titleLabel
+{
+	-fx-font-size: 25px;
+	-fx-text-fill: #333333;
+}
+
+
+#moviesLabel
+{
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+	-fx-text-fill: #333333;
+}
+
+#ItemPane
+{
+	fx-width: 100px;
+	fx-height: 155px;
+}
+
+#ItemPane:hover
+{
+	-fx-background-color: LightBlue;
+}
+
+#itemHeader
+{
+	-fx-font-weight: bold;
+}
+
+#ItemTitle
+{
+	-fx-max-width: 300px;
+}
+
+#booksLabel
+{
+	-fx-font-weight: bold;
+	-fx-font-size: 18px;
+	-fx-text-fill: #333333;
+}

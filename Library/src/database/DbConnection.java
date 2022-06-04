@@ -615,6 +615,87 @@ public class DbConnection {
 		
 	}
 	
+	public void getLoaned(int userID, ItemManager manager) throws IOException
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Getting loaned...");
+				
+				Items item = new Items();
+		    	double cost, duration;
+		    	String name, genre, creator, image, date;
+		    	int id, year, pages, quantity, type;
+		    	Boolean available;
+		    	
+	            // create statement
+	            stmt = connection.createStatement();
+	            loanStmt = connection.createStatement();
+	            
+				String sql = "call library.user_loaned(";
+	            
+	            sql += "\"" + userID + "\"" + ");";
+
+	            
+	            // execute queries
+	            ResultSet resultSet = stmt.executeQuery(sql); 
+	            
+	            while (resultSet.next())
+	            {
+	            	id = resultSet.getInt(1);
+	            	name = resultSet.getString(2);
+	            	year = resultSet.getInt(3);
+	            	genre = resultSet.getString(4);
+	            	cost = resultSet.getDouble(5);
+	            	creator = resultSet.getString(6);
+	            	image = resultSet.getString(8);
+	            	type = resultSet.getInt(9);
+	            	date = resultSet.getString(10);
+	            	
+	            	item = new Items(id, name, year, image, genre, cost);
+	        		manager.addItem(item);
+	        		
+
+	        		if(type == 1)
+	        		{
+	        			available = true;
+
+	            		id = resultSet.getInt(1);
+	                	pages = resultSet.getInt(7);
+	                	
+	                	Book copy = new Book(id, creator, pages, available, date);
+	                	manager.addCopy(copy);		        		
+	        		} else
+	        		{
+            			available = true;
+
+    	        		id = resultSet.getInt(1);
+    	            	duration = resultSet.getDouble(7);
+
+    	            	Movie copy = new Movie(id, creator, duration, available, date);
+    	            	manager.addCopy(copy);
+	        		}
+	            }
+
+	            stmt.close();
+	            loanStmt.close();
+	            System.out.println("Loaned Retrieved!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+		
+	}
+	
 	public int newUserID()
 	{
 		connect();

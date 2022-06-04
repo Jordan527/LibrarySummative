@@ -441,7 +441,23 @@ public class BasketController {
 	
 	public void Order(ActionEvent event) throws Exception
 	{
-		controller.order();
+		if(controller.getUser().getAccess() > 0)	
+		{
+			controller.order();
+			sceneController.loadController(controller);
+			sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
+		} else
+		{
+			double y = orderButton.getLayoutY();
+			Pane pane = (Pane) titleLabel.getParent();
+			
+			Label errorMessage = new Label("Your account has not been approved by admin yet!");
+			errorMessage.setId("errorMessage");
+			errorMessage.setLayoutX(80);
+			errorMessage.setLayoutY(y+25);
+			
+			pane.getChildren().addAll(errorMessage);
+		}
 	}
 	
 	public void setupUser()
@@ -460,6 +476,16 @@ public class BasketController {
 			}
 		});
 		
+		MenuItem loaned = new MenuItem("Loaned");
+		loaned.setOnAction(event -> {
+			try {
+				Loaned();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
 		MenuItem logout = new MenuItem("Logout");
 		logout.setOnAction(event -> {
 			try {
@@ -472,7 +498,7 @@ public class BasketController {
 		
 		
 		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, logout);
+		settingsButton.getItems().addAll(account, basket, loaned, logout);
 	
 	}
 	
@@ -491,6 +517,11 @@ public class BasketController {
 	{
 		sceneController.loadController(controller);
 		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+	}
+	public void Loaned() throws Exception
+	{
+		sceneController.loadController(controller);
+		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void Login(ActionEvent event) throws Exception

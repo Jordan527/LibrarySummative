@@ -143,4 +143,18 @@ public class SceneController {
 		scene.getStylesheets().add(getClass().getResource("/interfaces/css/Basket.css").toExternalForm());
 		stage.setScene(scene);
 	}
+	public void switchToLoaned(Stage stage) throws Exception
+	{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/interfaces/fxml/Loaned.fxml"));
+		Parent root = loader.load();
+		
+		LoanedController loanedController = loader.getController();
+		loanedController.init(controller);
+		
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/interfaces/css/Loaned.css").toExternalForm());
+		stage.setScene(scene);
+	}
+
 }

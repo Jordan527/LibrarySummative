@@ -28,6 +28,7 @@ public class MainController {
 			library.initBooks(itemManager);
 			library.initMovies(itemManager);
 			login("Yorudan", "root");
+//			login("Tesla", "Cars");			
 			initialised = true;
 		}
 		library.disconnect();
@@ -85,6 +86,12 @@ public class MainController {
 		int userID = user.getID();
 		itemManager.clearList();
 		library.getBasket(userID, itemManager);
+	}
+	public void getLoaned() throws IOException
+	{
+		int userID = user.getID();
+		itemManager.clearList();
+		library.getLoaned(userID, itemManager);
 	}
 	public void login(String username, String password)
 	{
