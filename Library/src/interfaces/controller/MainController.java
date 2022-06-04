@@ -8,6 +8,7 @@ import java.io.IOException;
 import database.*;
 
 public class MainController {
+	public UserManager userManager;
 	public ItemManager itemManager;
 	public DbConnection library;
 	
@@ -19,6 +20,7 @@ public class MainController {
 	{
 		library = new DbConnection();
 		itemManager = new ItemManager();
+		userManager = new UserManager();
 	}
 	public void init() throws IOException
 	{
@@ -53,6 +55,10 @@ public class MainController {
 	public ItemManager getItemManager()
 	{
 		return itemManager;
+	}
+	public UserManager getUserManager()
+	{
+		return userManager;
 	}
 	public void setItemManager(ItemManager itemManager)
 	{

@@ -2,8 +2,6 @@
 {
     -fx-font-size: 14px;
     -fx-font-weight: normal;
-	-fx-border-color: transparent;
-    -fx-background-color: transparent;
 }
 
 .button:hover

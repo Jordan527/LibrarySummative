@@ -93,5 +93,17 @@ public class SceneController {
 		scene.getStylesheets().add(getClass().getResource("/interfaces/css/Loaned.css").toExternalForm());
 		stage.setScene(scene);
 	}
-
+	public void switchToAdmin(Stage stage) throws Exception
+	{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/interfaces/fxml/Admin.fxml"));
+		Parent root = loader.load();
+		
+		AdminController adminController = loader.getController();
+		adminController.init(controller);
+		
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/interfaces/css/Admin.css").toExternalForm());
+		stage.setScene(scene);
+	}
 }

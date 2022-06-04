@@ -12,6 +12,7 @@ import interfaces.controller.MainController;
 import interfaces.controller.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -42,7 +43,10 @@ public class HomeController {
 		if(controller.user != null)
 		{
 			setupUser();
-			
+			if(controller.user.getAccess() == 2)
+			{
+				setupAdmin();
+			}
 		}
 		
 		addBooks();
@@ -89,6 +93,34 @@ public class HomeController {
 		settingsButton.getItems().clear();
 		settingsButton.getItems().addAll(account, basket, loaned, logout);
 	
+	}
+
+	public void setupAdmin()
+	{
+		Button adminButton = new Button("Admin");
+		
+		double x = settingsButton.getLayoutX();
+		double y = settingsButton.getLayoutY();
+
+		adminButton.setLayoutX(x-80);
+		adminButton.setLayoutY(y-3);
+		adminButton.setOnAction(event -> {
+			try {
+				Admin();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		Pane pane = (Pane) titleLabel.getParent();
+		pane.getChildren().addAll(adminButton);
+	}
+	
+	public void Admin() throws Exception
+	{
+		sceneController.loadController(controller);
+		sceneController.switchToAdmin((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void addBooks()
