@@ -41,7 +41,7 @@ public class LoanedController {
 		this.controller = controller;
 		controller.getLoaned();
 		this.itemManager = controller.getItemManager();
-		setupUser();
+		controller.settingsButtonSetup(settingsButton, true, false);
 		displayLoaned();
 	}
 	
@@ -229,70 +229,5 @@ public class LoanedController {
 		sceneController.loadController(controller);
 		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
-	
-	
-	public void setupUser()
-	{
 
-		MenuItem account = new MenuItem(controller.user.getUsername());
-		account.setOnAction(event -> Account());
-		
-		MenuItem basket = new MenuItem("Basket");
-		basket.setOnAction(event -> {
-			try {
-				Basket();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem loaned = new MenuItem("Loaned");
-		loaned.setOnAction(event -> {
-			try {
-				Loaned();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem logout = new MenuItem("Logout");
-		logout.setOnAction(event -> {
-			try {
-				Logout();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		
-		
-		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, loaned, logout);
-	
-	}
-	
-	public void Account()
-	{
-		System.out.println(controller.user.getUsername());
-	}
-	
-	public void Logout() throws Exception
-	{
-		controller.user = null;
-		sceneController.loadController(controller);
-		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Basket() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Loaned() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
-	}
-	
 }

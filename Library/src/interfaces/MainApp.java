@@ -19,6 +19,7 @@ public class MainApp extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		MainController mainController = new MainController();
 		mainController.init();
+		mainController.setStage(primaryStage);
 		
 		if(mainController.initialised)
 		{	

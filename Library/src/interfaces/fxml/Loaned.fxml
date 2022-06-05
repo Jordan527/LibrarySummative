@@ -12,8 +12,6 @@
       <Label fx:id="titleLabel" layoutX="22.0" layoutY="46.0" text="Loaned Items" />
       <MenuButton fx:id="settingsButton" layoutX="263.0" layoutY="10.0" mnemonicParsing="false" text="Settings">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
       <Pane fx:id="bookPane" layoutX="20.0" layoutY="78.0" prefHeight="146.0" prefWidth="340.0">

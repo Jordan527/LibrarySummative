@@ -42,7 +42,7 @@ public class HomeController {
 		this.itemManager = controller.getItemManager();
 		if(controller.user != null)
 		{
-			setupUser();
+			controller.settingsButtonSetup(settingsButton, true, true);
 			if(controller.user.getAccess() == 2)
 			{
 				setupAdmin();
@@ -53,47 +53,6 @@ public class HomeController {
 		addMovies();
 	}
 
-	public void setupUser()
-	{
-
-		MenuItem account = new MenuItem(controller.user.getUsername());
-		account.setOnAction(event -> Account());
-		
-		MenuItem basket = new MenuItem("Basket");
-		basket.setOnAction(event -> {
-			try {
-				Basket();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem loaned = new MenuItem("Loaned");
-		loaned.setOnAction(event -> {
-			try {
-				Loaned();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem logout = new MenuItem("Logout");
-		logout.setOnAction(event -> {
-			try {
-				Logout();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		
-		
-		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, loaned, logout);
-	
-	}
 
 	public void setupAdmin()
 	{
@@ -262,38 +221,5 @@ public class HomeController {
 		controller.setItem(item);
 		sceneController.loadController(controller);
 		sceneController.switchToItem((Stage) titleLabel.getScene().getWindow());
-	}
-	
-	public void Loaned() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
-	}
-	
-	public void Account()
-	{
-		System.out.println(controller.user.getUsername());
-	}
-	public void Logout() throws Exception
-	{
-		controller.user = null;
-		sceneController.loadController(controller);
-		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Basket() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
-	}
-	
-	public void Login(ActionEvent event) throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToLogin((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Register(ActionEvent event) throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToRegister((Stage) titleLabel.getScene().getWindow());
 	}
 }

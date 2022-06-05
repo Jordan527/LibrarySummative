@@ -2,6 +2,12 @@ package interfaces.controller;
 
 import users.*;
 import items.*;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -11,6 +17,8 @@ public class MainController {
 	public UserManager userManager;
 	public ItemManager itemManager;
 	public DbConnection library;
+	public SceneController sceneController = new SceneController();
+	public Stage stage;
 	
 	public Boolean initialised = false;
 	public Users user;
@@ -30,12 +38,13 @@ public class MainController {
 			library.initBooks(itemManager);
 			library.initMovies(itemManager);
 			login("Yorudan", "root");
+//			login("Balonduz", "law");
 //			login("Tesla", "Cars");			
 			initialised = true;
 		}
 		library.disconnect();
-	}
-	
+	}	
+		
 	public Users getUser() {
 		return user;
 	}
@@ -107,5 +116,104 @@ public class MainController {
 	{
 		int exists = library.existingUser(forename, surname, username, password);
 		return exists;
+	}
+
+	public void settingsButtonSetup(MenuButton button, boolean hasBasket, boolean hasLoaned)
+	{
+		MenuItem account = new MenuItem(this.user.getUsername());
+		account.setOnAction(event -> Account());
+		
+		MenuItem basket = new MenuItem("Basket");
+		basket.setOnAction(event -> {
+			try {
+				Basket();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		MenuItem loaned = new MenuItem("Loaned");
+		loaned.setOnAction(event -> {
+			try {
+				Loaned();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		MenuItem logout = new MenuItem("Logout");
+		logout.setOnAction(event -> {
+			try {
+				Logout();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		
+		button.getItems().clear();
+		if(this.user.getAccess() != 0)
+		{
+			if(hasBasket && hasLoaned)
+			{
+				button.getItems().addAll(account, basket, loaned, logout);
+			} else if(!hasBasket)
+			{
+				button.getItems().addAll(account, loaned, logout);
+			} else if(!hasLoaned)
+			{
+				button.getItems().addAll(account, basket, logout);
+			}
+			
+		} else
+		{
+			if(hasBasket)
+			{
+				button.getItems().addAll(account, basket, logout);
+			} else
+			{
+				button.getItems().addAll(account, logout);
+			}
+			
+		}
+		
+	}
+	
+	public void Account()
+	{
+		System.out.println(this.user.getUsername());
+	}
+	public void Logout() throws Exception
+	{
+		this.user = null;
+		sceneController.loadController(this);
+		sceneController.switchToHome(stage);
+	}
+	public void Basket() throws Exception
+	{
+		sceneController.loadController(this);
+		sceneController.switchToBasket(stage);
+	}
+	public void Login(ActionEvent event) throws Exception
+	{
+		sceneController.loadController(this);
+		sceneController.switchToLogin(stage);
+	}
+	public void Loaned() throws Exception
+	{
+		sceneController.loadController(this);
+		sceneController.switchToLoaned(stage);
+	}
+	public void Register(ActionEvent event) throws Exception
+	{
+		sceneController.loadController(this);
+		sceneController.switchToRegister(stage);
+	}
+	public void setStage(Stage stage)
+	{
+		this.stage = stage;
 	}
 }

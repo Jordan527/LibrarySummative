@@ -10,8 +10,6 @@
    <children>
       <MenuButton fx:id="settingsButton" layoutX="494.0" layoutY="14.0" mnemonicParsing="false" text="Settings">
         <items>
-          <MenuItem fx:id="loginButton" mnemonicParsing="false" onAction="#Login" text="Login" />
-          <MenuItem fx:id="registerButton" mnemonicParsing="false" onAction="#Register" text="Register" />
         </items>
       </MenuButton>
       <Label fx:id="titleLabel" layoutX="191.0" layoutY="55.0" prefHeight="29.0" text="Title" />
