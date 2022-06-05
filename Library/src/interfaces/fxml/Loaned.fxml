@@ -24,6 +24,6 @@
             <Label fx:id="moviesLabel" layoutX="0" layoutY="0" text="Movies" />
          </children>
       </Pane>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Button fx:id="homeButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#Home" text="Home" />
    </children>
 </AnchorPane>

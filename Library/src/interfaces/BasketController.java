@@ -411,7 +411,7 @@ public class BasketController {
 		return imageView;
 	}
 	
-	public void Back(ActionEvent event) throws Exception
+	public void Home(ActionEvent event) throws Exception
 	{
 		itemManager.clearList();
 		controller.setItemManager(itemManager);

@@ -120,7 +120,7 @@ public class AdminController {
 		table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
 	}
 	
-	public void Back(ActionEvent event) throws Exception
+	public void Home(ActionEvent event) throws Exception
 	{
 		controller.clearUsers();
 		sceneController.loadController(controller);

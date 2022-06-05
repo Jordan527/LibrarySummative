@@ -154,7 +154,7 @@ public class ItemController {
 	}
 	
 	
-	public void Back(ActionEvent event) throws Exception
+	public void Home(ActionEvent event) throws Exception
 	{
 		sceneController.loadController(controller);
 		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
