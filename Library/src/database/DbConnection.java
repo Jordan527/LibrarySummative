@@ -200,6 +200,60 @@ public class DbConnection {
 		}
 	}
 
+	public void initUsers(UserManager manager) 
+	{
+		String sql = "select * from view_non_admin";
+		
+		Items item = new Items();
+    	int id;
+    	String forename;
+    	String surname;
+    	String username;
+    	String password;
+    	int access;
+    	
+    	
+		try
+		{
+			System.out.println("Initialising users...");
+            // create statement
+            stmt = connection.createStatement();
+
+            // execute queries
+            ResultSet resultSet = stmt.executeQuery(sql); 
+            
+            
+            
+            // print results
+            while (resultSet.next())
+            {
+            	id = resultSet.getInt(1);
+            	forename = resultSet.getString(2);
+            	surname = resultSet.getString(3);
+            	username = resultSet.getString(4);
+            	password = resultSet.getString(5);
+            	access = resultSet.getInt(6);
+            	if (access == 2)
+            	{
+            		Admin user = new Admin(id, forename, surname, username, password);
+            		manager.addUser(user);
+            	} else
+            	{
+            		Standard user = new Standard(id, forename, surname, username, password, access);
+            		manager.addUser(user);
+            	}
+            	
+            	
+            	System.out.println("\n");
+            }
+            stmt.close();
+            System.out.println("Users initialised!");
+		}
+		catch (SQLException sqlE)
+		{
+            System.out.println(sqlE.toString());
+		}
+	}
 
 	public Users Login(String username, String password)
 	{
@@ -694,6 +748,76 @@ public class DbConnection {
 			}
 		}
 		
+	}
+	
+	public void deleteUser(int userID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Deleting User...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.delete_user(";
+	            
+	            sql += "\"" + userID + "\"" + ");";
+
+	            // execute queries
+	            stmt.executeUpdate(sql); 
+	
+
+	            stmt.close();
+	            System.out.println("User Deleted!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+	}
+	
+	public void verifyUser(int userID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+				System.out.println("Verifying User...");
+				
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.verify_user(";
+	            
+	            sql += "\"" + userID + "\"" + ");";
+
+	            // execute queries
+	            stmt.executeUpdate(sql); 
+	
+
+	            stmt.close();
+	            System.out.println("User Verified!");
+			}
+			catch (SQLException sqlE)
+			{
+	            System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
 	}
 	
 	public int newUserID()

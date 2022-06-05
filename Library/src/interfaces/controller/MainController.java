@@ -44,7 +44,22 @@ public class MainController {
 		}
 		library.disconnect();
 	}	
-		
+	
+	public void drawUsers()
+	{
+		library.connect();
+		if(library.opened)
+		{
+			library.initUsers(userManager);
+		}
+		library.disconnect();
+	}
+	public void clearUsers()
+	{
+		userManager.clear();
+	}
+	
+	
 	public Users getUser() {
 		return user;
 	}
@@ -117,7 +132,16 @@ public class MainController {
 		int exists = library.existingUser(forename, surname, username, password);
 		return exists;
 	}
-
+	public void deleteUser(int userID)
+	{
+		library.deleteUser(userID);
+	}
+	public void verifyUser(int userID)
+	{
+		library.verifyUser(userID);
+		userManager.verifyUser(userID);
+	}
+	
 	public void settingsButtonSetup(MenuButton button, boolean hasBasket, boolean hasLoaned)
 	{
 		MenuItem account = new MenuItem(this.user.getUsername());
@@ -155,7 +179,7 @@ public class MainController {
 		
 		
 		button.getItems().clear();
-		if(this.user.getAccess() != 0)
+		if(this.user.getIntAccess() != 0)
 		{
 			if(hasBasket && hasLoaned)
 			{

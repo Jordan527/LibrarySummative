@@ -441,7 +441,7 @@ public class BasketController {
 	
 	public void Order(ActionEvent event) throws Exception
 	{
-		if(controller.getUser().getAccess() > 0)	
+		if(controller.getUser().getIntAccess() > 0)	
 		{
 			controller.order();
 			sceneController.loadController(controller);

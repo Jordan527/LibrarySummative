@@ -43,7 +43,7 @@ public class HomeController {
 		if(controller.user != null)
 		{
 			controller.settingsButtonSetup(settingsButton, true, true);
-			if(controller.user.getAccess() == 2)
+			if(controller.user.getIntAccess() == 2)
 			{
 				setupAdmin();
 			}

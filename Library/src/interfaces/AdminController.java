@@ -11,17 +11,23 @@ import items.Book;
 import items.ItemManager;
 import items.Items;
 import items.Movie;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import users.UserManager;
+import users.Users;
 
 public class AdminController {
 	@FXML
@@ -29,9 +35,24 @@ public class AdminController {
 	@FXML
 	public MenuButton settingsButton;
 	@FXML
-	public Pane bookPane;
+	public Pane unverifiedPane;
 	@FXML
-	public Pane moviePane;
+	public Pane verifiedPane;
+	@FXML
+	public TableView<Users> table;
+	@FXML
+	public TableColumn<Users, String> usernameColumn;
+	@FXML
+	public TableColumn<Users, String> forenameColumn;
+	@FXML
+	public TableColumn<Users, String> surnameColumn;
+	@FXML
+	public TableColumn<Users, String> accessColumn;
+	@FXML
+	public Button deleteButton;
+	@FXML
+	public Button verifyButton;
+	
 	
 	public MainController controller;
 	public UserManager userManager;
@@ -40,83 +61,66 @@ public class AdminController {
 	public void init(MainController controller) throws IOException
 	{
 		this.controller = controller;
-		controller.getLoaned();
+		controller.drawUsers();
+		
 		this.userManager = controller.getUserManager();
-		setupUser();
+		controller.settingsButtonSetup(settingsButton, true, true);
+		
+		ArrayList<Users> users = userManager.getUserList();
+		table_init();
+		setTableContent(users);
 	}
 	
-
+	public void table_init() {
+		usernameColumn.setCellValueFactory(new PropertyValueFactory<Users, String>("username"));
+		forenameColumn.setCellValueFactory(new PropertyValueFactory<Users, String>("forename"));
+		surnameColumn.setCellValueFactory(new PropertyValueFactory<Users, String>("surname"));
+		accessColumn.setCellValueFactory(new PropertyValueFactory<Users, String>("access"));
+	}
 	
+	public void setTableContent(ArrayList<Users> userList)
+	{
+		table.getItems().setAll(userList);   
+	}
+	
+	public void clickItem(MouseEvent event)
+	{
+	    if (event.getClickCount() == 2) //Checking double click
+	    {
+	    	System.out.println(table.getSelectionModel().getSelectedItem().getID());
+	    	System.out.println(table.getSelectionModel().getSelectedItem().getUsername());
+	        System.out.println(table.getSelectionModel().getSelectedItem().getForename());
+	        System.out.println(table.getSelectionModel().getSelectedItem().getSurname());
+	    }
+	}
+	
+	public void Verify(ActionEvent event) throws Exception
+	{
+		int userID = table.getSelectionModel().getSelectedItem().getID();
+		controller.verifyUser(userID);
+		ArrayList<Users> users = userManager.getUserList();
+		
+		int row = table.getSelectionModel().getSelectedIndex();
+		System.out.println(row);
+		
+		Users user = userManager.getUser(userID);
+		
+		
+		table.getItems().set(row, user);
+	}
+	
+	public void Delete(ActionEvent event) throws Exception
+	{
+		int user = table.getSelectionModel().getSelectedItem().getID();
+		controller.deleteUser(user);
+		table.getItems().removeAll(table.getSelectionModel().getSelectedItem());
+	}
 	
 	public void Back(ActionEvent event) throws Exception
 	{
+		controller.clearUsers();
 		sceneController.loadController(controller);
 		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
-	
-	
-	public void setupUser()
-	{
 
-		MenuItem account = new MenuItem(controller.user.getUsername());
-		account.setOnAction(event -> Account());
-		
-		MenuItem basket = new MenuItem("Basket");
-		basket.setOnAction(event -> {
-			try {
-				Basket();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem loaned = new MenuItem("Loaned");
-		loaned.setOnAction(event -> {
-			try {
-				Loaned();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem logout = new MenuItem("Logout");
-		logout.setOnAction(event -> {
-			try {
-				Logout();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		
-		
-		settingsButton.getItems().clear();
-		settingsButton.getItems().addAll(account, basket, loaned, logout);
-	
-	}
-	
-	public void Account()
-	{
-		System.out.println(controller.user.getUsername());
-	}
-	
-	public void Logout() throws Exception
-	{
-		controller.user = null;
-		sceneController.loadController(controller);
-		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Basket() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
-	}
-	public void Loaned() throws Exception
-	{
-		sceneController.loadController(controller);
-		sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
-	}
-	
 }

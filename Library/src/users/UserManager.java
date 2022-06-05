@@ -2,6 +2,8 @@ package users;
 
 import java.util.*;
 
+import items.Items;
+
 public class UserManager {
 	private ArrayList<Users> userList;
 	
@@ -12,12 +14,33 @@ public class UserManager {
 	
 	public ArrayList<Users> getUserList() 
 	{
+		sort();
 		return userList;
 	}
-	
+	public void clear()
+	{
+		userList = new ArrayList<>();
+	}
+
+	public void sort()
+	{
+        Collections.sort(userList, Comparator.comparing(Users::getIntAccess));
+	}
 	public void addUser(Users user)
 	{
 		userList.add(user);
+	}
+	
+	public Users getUser(int id)
+	{
+		for(Users user : userList)
+		{
+			if(user.getID() == id)
+			{
+				return user;
+			}
+		}
+		return null;
 	}
 	
 	public int userIndex(Users user)
@@ -49,6 +72,7 @@ public class UserManager {
 		
 		return index;
 	}
+	
 	public int getIndex(String username, String password)
 	{
 		Iterator<Users> it = userList.iterator();
@@ -77,6 +101,17 @@ public class UserManager {
 		}
 		
 		return index;
+	}
+	
+	public void verifyUser(int id)
+	{
+		for(Users user : userList)
+		{
+			if(user.getID() == id)
+			{
+				user.setAccess(1);
+			}
+		}
 	}
 	
 	public String existingUser(String forename, String surname, String username, String password)

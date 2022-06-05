@@ -53,9 +53,24 @@ public class Users {
 	private void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAccess() {
+	public int getIntAccess() {
 		return access;
 	}
+	public String getAccess() 
+	{
+		String output;
+		
+		if(access == 1)
+		{
+			output = "Verified";
+		} else
+		{
+			output = "Unverified";
+		}
+		
+		return output;
+	}
+	
 	public void setAccess(int access) {
 		this.access = access;
 	}
@@ -68,6 +83,6 @@ public class Users {
 				"\nUsername: " + getUsername() +
 				"\nPassword: " + getPassword() +
 				"\nType: " + this.getClass().getSimpleName() +
-				"\nAccess: " + this.getAccess());
+				"\nAccess: " + this.getIntAccess());
 	}
 }

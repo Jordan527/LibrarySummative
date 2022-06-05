@@ -2,8 +2,6 @@
 {
     -fx-font-size: 14px;
     -fx-font-weight: normal;
-	-fx-border-color: transparent;
-    -fx-background-color: transparent;
 }
 
 .button:hover
@@ -24,7 +22,13 @@
 }
 
 
-#moviesLabel
+#verifiedTitle
+{
+	-fx-font-size: 18px;
+	-fx-text-fill: #333333;
+}
+
+#unverifiedTitle
 {
 	-fx-font-size: 18px;
 	-fx-text-fill: #333333;
@@ -46,8 +50,3 @@
 	-fx-max-width: 100px;
 }
 
-#booksLabel
-{
-	-fx-font-size: 18px;
-	-fx-text-fill: #333333;
-}
