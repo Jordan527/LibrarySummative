@@ -37,9 +37,7 @@ public class MainController {
 		{
 			library.initBooks(itemManager);
 			library.initMovies(itemManager);
-			login("Yorudan", "root");
-//			login("Balonduz", "law");
-//			login("Tesla", "Cars");			
+		
 			initialised = true;
 		}
 		library.disconnect();
@@ -127,6 +125,11 @@ public class MainController {
 		itemManager.clearList();
 		library.getLoaned(userID, itemManager);
 	}
+	public void getLoaned(int userID) throws IOException
+	{
+		itemManager.clearList();
+		library.getLoaned(userID, itemManager);
+	}
 	public void login(String username, String password)
 	{
 		this.user = library.Login(username, password);
@@ -145,68 +148,102 @@ public class MainController {
 		library.verifyUser(userID);
 		userManager.verifyUser(userID);
 	}
+	public void returnItem(int userID, int itemID)
+	{
+		library.returnItem(userID, itemID);
+	}
+	
 	
 	public void settingsButtonSetup(MenuButton button, boolean hasBasket, boolean hasLoaned)
 	{
-		MenuItem account = new MenuItem(this.user.getUsername());
-		account.setOnAction(event -> Account());
-		
-		MenuItem basket = new MenuItem("Basket");
-		basket.setOnAction(event -> {
-			try {
-				Basket();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem loaned = new MenuItem("Loaned");
-		loaned.setOnAction(event -> {
-			try {
-				Loaned();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
-		
-		MenuItem logout = new MenuItem("Logout");
-		logout.setOnAction(event -> {
-			try {
-				Logout();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		
-		
-		button.getItems().clear();
-		if(this.user.getIntAccess() != 0)
+		if(this.user == null)
 		{
-			if(hasBasket && hasLoaned)
-			{
-				button.getItems().addAll(account, basket, loaned, logout);
-			} else if(!hasBasket)
-			{
-				button.getItems().addAll(account, loaned, logout);
-			} else if(!hasLoaned)
-			{
-				button.getItems().addAll(account, basket, logout);
-			}
+			MenuItem login = new MenuItem("Login");
+			login.setOnAction(event -> {
+				try {
+					Login();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
 			
+			MenuItem register = new MenuItem("Register");
+			register.setOnAction(event -> {
+				try {
+					Register();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			
+			button.getItems().addAll(login, register);
 		} else
 		{
-			if(hasBasket)
+			MenuItem account = new MenuItem(this.user.getUsername());
+			account.setOnAction(event -> Account());
+			
+			MenuItem basket = new MenuItem("Basket");
+			basket.setOnAction(event -> {
+				try {
+					Basket();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			MenuItem loaned = new MenuItem("Loaned");
+			loaned.setOnAction(event -> {
+				try {
+					Loaned();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+			
+			MenuItem logout = new MenuItem("Logout");
+			logout.setOnAction(event -> {
+				try {
+					Logout();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			
+			
+			button.getItems().clear();
+			
+			if(this.user.getIntAccess() != 0)
 			{
-				button.getItems().addAll(account, basket, logout);
+				if(hasBasket && hasLoaned)
+				{
+					button.getItems().addAll(account, basket, loaned, logout);
+				} else if(!hasBasket)
+				{
+					button.getItems().addAll(account, loaned, logout);
+				} else if(!hasLoaned)
+				{
+					button.getItems().addAll(account, basket, logout);
+				}
+				
 			} else
 			{
-				button.getItems().addAll(account, logout);
+				if(hasBasket)
+				{
+					button.getItems().addAll(account, basket, logout);
+				} else
+				{
+					button.getItems().addAll(account, logout);
+				}
+				
 			}
-			
 		}
+
+		
 		
 	}
 	
@@ -225,7 +262,7 @@ public class MainController {
 		sceneController.loadController(this);
 		sceneController.switchToBasket(stage);
 	}
-	public void Login(ActionEvent event) throws Exception
+	public void Login() throws Exception
 	{
 		sceneController.loadController(this);
 		sceneController.switchToLogin(stage);
@@ -235,7 +272,7 @@ public class MainController {
 		sceneController.loadController(this);
 		sceneController.switchToLoaned(stage);
 	}
-	public void Register(ActionEvent event) throws Exception
+	public void Register() throws Exception
 	{
 		sceneController.loadController(this);
 		sceneController.switchToRegister(stage);

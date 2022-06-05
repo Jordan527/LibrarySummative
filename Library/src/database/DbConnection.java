@@ -30,9 +30,7 @@ public class DbConnection {
 		try 
 		{
 		    // create connection
-		    System.out.println("Connecting to the MySQL database...");
 		    connection = DriverManager.getConnection(url, username, password);
-		    System.out.println("MySQL database connected!");
 		    opened = true;
 		}
 		catch (SQLException sqlE)
@@ -45,7 +43,6 @@ public class DbConnection {
 	public void disconnect() 
 	{
         // close connection
-        System.out.println("Closing connection...");
         if(connection != null)
         {
             try
@@ -76,7 +73,6 @@ public class DbConnection {
     	
 		try
 		{	
-			System.out.println("Initialising books...");
             // create statement
             stmt = connection.createStatement();
             loanStmt = connection.createStatement();
@@ -125,11 +121,10 @@ public class DbConnection {
             }
             stmt.close();
             loanStmt.close();
-            System.out.println("\nBooks initialised!");
 		}
 		catch (SQLException sqlE)
 		{
-            System.out.println(sqlE.toString());
+			System.out.println(sqlE.toString());
 		}
 	}
 	
@@ -145,7 +140,6 @@ public class DbConnection {
     	
 		try
 		{
-			System.out.println("Initialising movies...");
             // create statement
             stmt = connection.createStatement();
             loanStmt = connection.createStatement();
@@ -192,11 +186,10 @@ public class DbConnection {
             }
             stmt.close();
             loanStmt.close();
-            System.out.println("\nMovies initialised!");
 		}
 		catch (SQLException sqlE)
 		{
-            System.out.println(sqlE.toString());
+			System.out.println(sqlE.toString());
 		}
 	}
 
@@ -215,7 +208,6 @@ public class DbConnection {
     	
 		try
 		{
-			System.out.println("Initialising users...");
             // create statement
             stmt = connection.createStatement();
 
@@ -244,14 +236,12 @@ public class DbConnection {
             	}
             	
             	
-            	System.out.println("\n");
             }
             stmt.close();
-            System.out.println("Users initialised!");
 		}
 		catch (SQLException sqlE)
 		{
-            System.out.println(sqlE.toString());
+			System.out.println(sqlE.toString());
 		}
 	}
 
@@ -269,7 +259,6 @@ public class DbConnection {
 	    	
 			try
 			{
-				System.out.println("Logging in...");
 				
 	            // create statement
 	            stmt = connection.createStatement();
@@ -301,12 +290,11 @@ public class DbConnection {
 	            }
 	            
 	            stmt.close();
-	            System.out.println("Logged in!");
 	            return user;
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -325,7 +313,6 @@ public class DbConnection {
 			try
 			{
 				int exists = 0;
-				System.out.println("Logging in...");
 				
 	            // create statement
 	            stmt = connection.createStatement();
@@ -347,12 +334,11 @@ public class DbConnection {
 	            }
 	            
 	            stmt.close();
-	            System.out.println("Logged in!");
 	            return exists;
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -370,7 +356,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Inserting new user into database...");
 				
 	            // create statement
 	            stmt = connection.createStatement();
@@ -388,11 +373,10 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("User Inserted!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -409,7 +393,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Adding new item to basket...");
 				
 	            // create statement
 	            stmt = connection.createStatement();
@@ -424,11 +407,10 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("Item Added!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -445,8 +427,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Removing an item from the basket...");
-				
 	            // create statement
 	            stmt = connection.createStatement();
 	            
@@ -460,11 +440,10 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("Item Removed!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -481,8 +460,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Deleting an item from the basket...");
-				
 	            // create statement
 	            stmt = connection.createStatement();
 	            
@@ -496,11 +473,10 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("Item Deleted!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -517,8 +493,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Loaning Items...");
-				
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 			    Date currentDate = new Date(); 
 			    
@@ -551,15 +525,11 @@ public class DbConnection {
 
 	            }
 	            
-
-	
-
 	            stmt.close();
-	            System.out.println("Items Loaned!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -576,8 +546,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Getting basket...");
-				
 				Items item = new Items();
 		    	double cost, duration;
 		    	String name, genre, creator, image, date;
@@ -655,11 +623,10 @@ public class DbConnection {
 
 	            stmt.close();
 	            loanStmt.close();
-	            System.out.println("Basket Retrieved!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -677,8 +644,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Getting loaned...");
-				
 				Items item = new Items();
 		    	double cost, duration;
 		    	String name, genre, creator, image, date;
@@ -736,11 +701,10 @@ public class DbConnection {
 
 	            stmt.close();
 	            loanStmt.close();
-	            System.out.println("Loaned Retrieved!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -758,8 +722,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Deleting User...");
-				
 	            // create statement
 	            stmt = connection.createStatement();
 	            
@@ -772,11 +734,10 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("User Deleted!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -793,8 +754,6 @@ public class DbConnection {
 		{
 			try
 			{
-				System.out.println("Verifying User...");
-				
 	            // create statement
 	            stmt = connection.createStatement();
 	            
@@ -807,11 +766,44 @@ public class DbConnection {
 	
 
 	            stmt.close();
-	            System.out.println("User Verified!");
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
+			}
+			finally
+			{
+				disconnect();
+			}
+		}
+	}
+
+	public void returnItem(int userID, int itemID)
+	{
+		connect();
+		
+		if(opened)
+		{
+			try
+			{
+	            // create statement
+	            stmt = connection.createStatement();
+	            
+				String sql = "call library.delete_loaned(";
+	            
+	            sql += "\"" + userID + "\"";
+	            sql += "," + "\"" + itemID + "\"" + ");";
+
+	            // execute queries
+	            stmt.executeUpdate(sql); 
+	
+
+	            stmt.close();
+	    		
+			}
+			catch (SQLException sqlE)
+			{
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{
@@ -850,7 +842,7 @@ public class DbConnection {
 			}
 			catch (SQLException sqlE)
 			{
-	            System.out.println(sqlE.toString());
+				System.out.println(sqlE.toString());
 			}
 			finally
 			{

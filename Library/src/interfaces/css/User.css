@@ -38,3 +38,7 @@
 	-fx-max-width: 100px;
 }
 
+#itemHeader
+{
+	-fx-font-weight: bold;
+}

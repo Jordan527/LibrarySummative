@@ -40,9 +40,10 @@ public class HomeController {
 	{
 		this.controller = controller;
 		this.itemManager = controller.getItemManager();
+		
+		controller.settingsButtonSetup(settingsButton, true, true);
 		if(controller.user != null)
 		{
-			controller.settingsButtonSetup(settingsButton, true, true);
 			if(controller.user.getIntAccess() == 2)
 			{
 				setupAdmin();

@@ -4,7 +4,7 @@ Genre: Action
 Cost: £4.8
 Director: Quentin Tarantino
 Duration: 2H and 33M
-Available: 2
-Loaned: 3
+Available: 0
+Loaned: 5
 Earliest Return: 08-05-2022
 Total: 5

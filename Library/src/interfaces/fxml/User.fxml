@@ -23,6 +23,6 @@
       <Label fx:id="userSurname" layoutX="100.0" layoutY="125.0" text="a" />
       <Label fx:id="accessLabel" layoutX="25.0" layoutY="145.0" text="Access: " />
       <Label fx:id="userAccess" layoutX="100.0" layoutY="145.0" text="a" />
-      <Label fx:id="titleLabel" layoutX="20.0" layoutY="215.0" text="Loaned Items" />
+      <Label fx:id="loanedLabel" layoutX="20.0" layoutY="215.0" text="Loaned Items" />
    </children>
 </AnchorPane>
