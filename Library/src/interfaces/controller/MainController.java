@@ -50,6 +50,7 @@ public class MainController {
 		library.connect();
 		if(library.opened)
 		{
+			userManager.clear();
 			library.initUsers(userManager);
 		}
 		library.disconnect();
@@ -58,7 +59,10 @@ public class MainController {
 	{
 		userManager.clear();
 	}
-	
+	public void setUserManager(UserManager manager) 
+	{
+		this.userManager = manager;
+	}
 	
 	public Users getUser() {
 		return user;

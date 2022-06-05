@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="464.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.UserController">
+   <children>
+      <Label fx:id="titleLabel" layoutX="24.0" layoutY="50.0" text="User Information" />
+      <MenuButton fx:id="settingsButton" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" text="Settings">
+        <items>
+        </items>
+      </MenuButton>
+      <Button fx:id="backButton" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+      <Button fx:id="deleteButton" layoutX="262.0" layoutY="412.0" mnemonicParsing="false" onAction="#Delete" text="Delete User" />
+      <Button fx:id="verifyButton" layoutX="106.0" layoutY="412.0" mnemonicParsing="false" onAction="#Verify" text="Verify User" />
+   </children>
+</AnchorPane>

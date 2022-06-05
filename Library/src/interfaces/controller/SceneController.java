@@ -106,4 +106,18 @@ public class SceneController {
 		scene.getStylesheets().add(getClass().getResource("/interfaces/css/Admin.css").toExternalForm());
 		stage.setScene(scene);
 	}
+	public void switchToUser(Stage stage) throws Exception
+	{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/interfaces/fxml/User.fxml"));
+		Parent root = loader.load();
+		
+		UserController userController = loader.getController();
+		userController.init(controller);
+		
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("/interfaces/css/User.css").toExternalForm());
+		stage.setScene(scene);
+	}
+
 }

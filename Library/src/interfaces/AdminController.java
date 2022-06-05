@@ -35,10 +35,6 @@ public class AdminController {
 	@FXML
 	public MenuButton settingsButton;
 	@FXML
-	public Pane unverifiedPane;
-	@FXML
-	public Pane verifiedPane;
-	@FXML
 	public TableView<Users> table;
 	@FXML
 	public TableColumn<Users, String> usernameColumn;
@@ -83,14 +79,22 @@ public class AdminController {
 		table.getItems().setAll(userList);   
 	}
 	
-	public void clickItem(MouseEvent event)
+	public void clickItem(MouseEvent event) throws Exception
 	{
 	    if (event.getClickCount() == 2) //Checking double click
 	    {
-	    	System.out.println(table.getSelectionModel().getSelectedItem().getID());
-	    	System.out.println(table.getSelectionModel().getSelectedItem().getUsername());
-	        System.out.println(table.getSelectionModel().getSelectedItem().getForename());
-	        System.out.println(table.getSelectionModel().getSelectedItem().getSurname());
+	    	Users data = table.getSelectionModel().getSelectedItem();
+	    	if(data != null)
+	    	{
+		    	int userID = data.getID();
+		    	
+		    	Users user = userManager.getUser(userID);
+		    	userManager.clear();
+		    	userManager.addUser(user);
+		    	controller.setUserManager(userManager);
+		    	sceneController.loadController(controller);
+		    	sceneController.switchToUser((Stage) titleLabel.getScene().getWindow());
+	    	}
 	    }
 	}
 	
@@ -122,5 +126,4 @@ public class AdminController {
 		sceneController.loadController(controller);
 		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 	}
-
 }
