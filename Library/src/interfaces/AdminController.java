@@ -105,7 +105,6 @@ public class AdminController {
 		ArrayList<Users> users = userManager.getUserList();
 		
 		int row = table.getSelectionModel().getSelectedIndex();
-		System.out.println(row);
 		
 		Users user = userManager.getUser(userID);
 		

@@ -38,7 +38,14 @@ public class UserController {
 	public Button deleteButton;
 	@FXML
 	public Button verifyButton;
-	
+	@FXML
+	public Label userUsername;
+	@FXML
+	public Label userForename;
+	@FXML
+	public Label userSurname;
+	@FXML
+	public Label userAccess;
 	
 	public MainController controller;
 	public UserManager userManager;
@@ -54,23 +61,35 @@ public class UserController {
 		
 		this.user = userManager.getUserList().get(0);
 		
+		if(user.getIntAccess() == 1)
+		{
+			verifyButton.setVisible(false);
+		}
+		
 		displayUserInfo();
 	}
 	
 	
 	public void displayUserInfo()
 	{
-		user.displayAll();
+		userUsername.setText(user.getUsername());
+		userForename.setText(user.getForename());
+		userSurname.setText(user.getSurname());
+		userAccess.setText(user.getAccess());;
 	}
+	
 
 	public void Verify(ActionEvent event) throws Exception
 	{
-		System.out.println("Verified");
+		controller.verifyUser(user.getID());
+		userAccess.setText(user.getAccess());
 	}
 	
 	public void Delete(ActionEvent event) throws Exception
 	{
-		System.out.println("Deleted");
+		controller.deleteUser(user.getID());
+		sceneController.loadController(controller);
+		sceneController.switchToAdmin((Stage) titleLabel.getScene().getWindow());
 	}
 	
 	public void Back(ActionEvent event) throws Exception
@@ -79,5 +98,4 @@ public class UserController {
 		sceneController.loadController(controller);
 		sceneController.switchToAdmin((Stage) titleLabel.getScene().getWindow());
 	}
-
 }

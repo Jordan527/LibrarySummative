@@ -3,11 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="464.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.UserController">
+<AnchorPane prefHeight="495.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.UserController">
    <children>
       <Label fx:id="titleLabel" layoutX="24.0" layoutY="50.0" text="User Information" />
       <MenuButton fx:id="settingsButton" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" text="Settings">
@@ -15,7 +13,16 @@
         </items>
       </MenuButton>
       <Button fx:id="backButton" layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#Back" text="Back" />
-      <Button fx:id="deleteButton" layoutX="262.0" layoutY="412.0" mnemonicParsing="false" onAction="#Delete" text="Delete User" />
-      <Button fx:id="verifyButton" layoutX="106.0" layoutY="412.0" mnemonicParsing="false" onAction="#Verify" text="Verify User" />
+      <Button fx:id="deleteButton" layoutX="30.0" layoutY="173.0" mnemonicParsing="false" onAction="#Delete" text="Delete User" />
+      <Button fx:id="verifyButton" layoutX="145.0" layoutY="173.0" mnemonicParsing="false" onAction="#Verify" text="Verify User" />
+      <Label fx:id="usernameLabel" layoutX="24.0" layoutY="85.0" text="Username: " />
+      <Label fx:id="forenameLabel" layoutX="25.0" layoutY="105.0" text="Forename: " />
+      <Label fx:id="surnameLabel" layoutX="25.0" layoutY="125.0" text="Surname: " />
+      <Label fx:id="userUsername" layoutX="100.0" layoutY="85.0" text="a" />
+      <Label fx:id="userForename" layoutX="100.0" layoutY="105.0" text="a" />
+      <Label fx:id="userSurname" layoutX="100.0" layoutY="125.0" text="a" />
+      <Label fx:id="accessLabel" layoutX="25.0" layoutY="145.0" text="Access: " />
+      <Label fx:id="userAccess" layoutX="100.0" layoutY="145.0" text="a" />
+      <Label fx:id="titleLabel" layoutX="20.0" layoutY="215.0" text="Loaned Items" />
    </children>
 </AnchorPane>

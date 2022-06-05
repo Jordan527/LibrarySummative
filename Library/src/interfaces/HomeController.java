@@ -49,8 +49,7 @@ public class HomeController {
 			}
 		}
 		
-		addBooks();
-		addMovies();
+		addItems();
 	}
 
 
@@ -82,29 +81,45 @@ public class HomeController {
 		sceneController.switchToAdmin((Stage) titleLabel.getScene().getWindow());
 	}
 	
-	public void addBooks()
+	public void addItems()
 	{
-		Pane pane =  (Pane) booksLabel.getParent();
+		Pane pane =  new Pane();
 		
-		ArrayList<Items> booksList = itemManager.getBooks();
-		int x = 5;
+		ArrayList<Items> itemList = itemManager.getAll();
+		int movieX = -105;
+		int bookX = -105;
+		int x = 0;
 		int y = 23;
 		
 		
-		for(Items item : booksList)
+		for(Items item : itemList)
 		{
-			Book copy = (Book) item.getItem();
+			Movie movieCopy = new Movie();
+			Book bookCopy = new Book();
+			
+			Label title = new Label(item.getName());		
+			Label date = new Label("" + item.getRelease());
+			Label cost = new Label(item.getCostOutput());
+			
+			Label creator;
+			try
+			{
+				movieCopy = (Movie) item.getItem();
+				creator = new Label(movieCopy.getDirector());
+				pane = (Pane) moviesLabel.getParent();
+				movieX += 110;
+				x = movieX;
+			} catch (Exception e) {
+				bookCopy = (Book) item.getItem();
+				creator = new Label(bookCopy.getAuthor());
+				pane = (Pane) booksLabel.getParent();
+				bookX += 110;
+				x = bookX;
+			}
 			
 			ImageView imageView = loadImage(item.getImage());
 			imageView.setFitWidth(80);
 			imageView.setFitHeight(110);
-			
-			
-			Label title = new Label(item.getName());
-			Label author = new Label(copy.getAuthor());
-			Label date = new Label("" + item.getRelease());
-			Label cost = new Label(item.getCostOutput());
-			
 			
 			imageView.setX(0);
 			imageView.setY(0);
@@ -113,8 +128,8 @@ public class HomeController {
 			title.setLayoutX(0);
 			title.setLayoutY(110);
 			
-			author.setLayoutX(0);
-			author.setLayoutY(125);
+			creator.setLayoutX(0);
+			creator.setLayoutY(125);
 			
 			date.setLayoutX(0);
 			date.setLayoutY(140);
@@ -135,73 +150,13 @@ public class HomeController {
 				}
 			});
 			
-			itemPane.getChildren().addAll(imageView, title, author, date, cost);			
+			itemPane.getChildren().addAll(imageView, title, creator, date, cost);			
 			pane.getChildren().add(itemPane);
 			
-			x += 110;
 		}
 	}
 	
-	public void addMovies()
-	{
-		Pane pane =  (Pane) moviesLabel.getParent();
-		
-		ArrayList<Items> moviesList = itemManager.getMovies();
-		int x = 5;
-		int y = 23;
-		
-		
-		for(Items item : moviesList)
-		{
-			Movie copy = (Movie) item.getItem();
-			
-			ImageView imageView = loadImage(item.getImage());
-			imageView.setFitWidth(80);
-			imageView.setFitHeight(110);
-			
-			
-			Label title = new Label(item.getName());
-			Label director = new Label(copy.getDirector());
-			Label date = new Label("" + item.getRelease());
-			Label cost = new Label(item.getCostOutput());
-			
-			
-			imageView.setX(0);
-			imageView.setY(0);
-			
-			title.setId("ItemTitle");
-			title.setLayoutX(0);
-			title.setLayoutY(110);
-			
-			director.setLayoutX(0);
-			director.setLayoutY(125);
-			
-			date.setLayoutX(0);
-			date.setLayoutY(140);
-			
-			cost.setLayoutX(0);
-			cost.setLayoutY(155);
-			
-			Pane itemPane = new Pane();
-			itemPane.setId("ItemPane");
-			itemPane.setLayoutX(x);
-			itemPane.setLayoutY(y);
-			itemPane.setOnMouseClicked(event -> {
-				try {
-					itemSelected(item);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			});
-			
-			itemPane.getChildren().addAll(imageView, title, director, date, cost);			
-			pane.getChildren().add(itemPane);
-			
-			x += 110;
-		}
-	}
-	
+
 	public ImageView loadImage(String source)
 	{
 		FileInputStream inputStream = null;

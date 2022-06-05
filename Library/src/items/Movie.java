@@ -4,6 +4,7 @@ public class Movie extends Item{
 	private String director;
 	private Double duration;
 	
+	public Movie() {}
 	public Movie(int ID, String director, Double duration)
 	{
 		super(ID);
