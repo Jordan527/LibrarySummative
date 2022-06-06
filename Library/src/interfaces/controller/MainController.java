@@ -35,9 +35,7 @@ public class MainController {
 		library.connect();
 		if(library.opened)
 		{
-			library.initBooks(itemManager);
-			library.initMovies(itemManager);
-		
+			library.initItems(itemManager);
 			initialised = true;
 		}
 		library.disconnect();
@@ -152,7 +150,17 @@ public class MainController {
 	{
 		library.returnItem(userID, itemID);
 	}
-	
+	public void searchItem(String text) throws IOException
+	{
+		library.connect();
+		if(library.opened)
+		{
+			itemManager.clearList();
+			library.searchItems(itemManager, text);
+		}
+		library.disconnect();
+		
+	}
 	
 	public void settingsButtonSetup(MenuButton button, boolean hasBasket, boolean hasLoaned)
 	{

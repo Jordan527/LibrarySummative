@@ -57,16 +57,14 @@ public class DbConnection {
         }
 	}
 	
-	
-	
-	public void initBooks(ItemManager manager) throws IOException 
+	public void initItems(ItemManager manager) throws IOException 
 	{
-		String sql = "select * from view_books";
+		String sql = "select * from view_products";
 		
 		
 		Items item = new Items();
-    	double cost;
-    	String name, genre, author, image, date;
+    	double cost, duration;
+    	String name, genre, creator, image, date, type;
     	int id, year, pages, quantity;
     	Boolean available;
     	
@@ -92,6 +90,7 @@ public class DbConnection {
             	cost = resultSet.getDouble(5);
             	image = resultSet.getString(8);
             	quantity = resultSet.getInt(9);
+            	type = resultSet.getString(10);
             	
             	item = new Items(id, name, year, image, genre, cost);
         		manager.addItem(item);
@@ -112,11 +111,22 @@ public class DbConnection {
         				date = simpleDateFormat.format(copyDate);
         			}
             		id = resultSet.getInt(1);
-            		author = resultSet.getString(6);
-                	pages = resultSet.getInt(7);
+            		creator = resultSet.getString(6);
                 	
-                	Book copy = new Book(id, author, pages, available, date);
-                	manager.addCopy(copy);
+                	
+                	if(type.equals("Book"))
+                	{
+                		pages = resultSet.getInt(7);
+                		Book copy = new Book(id, creator, pages, available, date);
+                		manager.addCopy(copy);
+                	} else
+                	{
+                		duration = resultSet.getInt(7);
+                		Movie copy = new Movie(id, creator, duration, available, date);
+                		manager.addCopy(copy);
+                	}
+                	
+                	
         		}
             }
             stmt.close();
@@ -128,18 +138,20 @@ public class DbConnection {
 		}
 	}
 	
-	public void initMovies(ItemManager manager) throws IOException 
+	public void searchItems(ItemManager manager, String text) throws IOException
 	{
-		String sql = "select * from view_movies";
+		String sql = "SELECT * FROM view_products WHERE name LIKE '%" + text + "%'";
+		
 		
 		Items item = new Items();
     	double cost, duration;
-    	String name, genre, director, image, date;
-    	int id, year, quantity;
+    	String name, genre, creator, image, date, type;
+    	int id, year, pages, quantity;
     	Boolean available;
     	
+    	
 		try
-		{
+		{	
             // create statement
             stmt = connection.createStatement();
             loanStmt = connection.createStatement();
@@ -147,7 +159,8 @@ public class DbConnection {
             // execute queries
             ResultSet resultSet = stmt.executeQuery(sql); 
             
-  
+            
+            
             // print results
             while (resultSet.next())
             {
@@ -158,12 +171,15 @@ public class DbConnection {
             	cost = resultSet.getDouble(5);
             	image = resultSet.getString(8);
             	quantity = resultSet.getInt(9);
-
-        		item = new Items(id, name, year, image, genre, cost);
+            	type = resultSet.getString(10);
+            	
+            	item = new Items(id, name, year, image, genre, cost);
         		manager.addItem(item);
         		
         		String sql2 = "call product_loaned(" + id + ")";
         		ResultSet basket = loanStmt.executeQuery(sql2);
+        		
+        
         		
         		for(int i = 0; i < quantity; i++)
         		{
@@ -175,14 +191,24 @@ public class DbConnection {
         				Date copyDate = basket.getDate(1);
         				date = simpleDateFormat.format(copyDate);
         			}
-	        		id = resultSet.getInt(1);
-	        		director = resultSet.getString(6);
-	            	duration = resultSet.getDouble(7);
-
-	            	Movie copy = new Movie(id, director, duration, available, date);
-	            	manager.addCopy(copy);
+            		id = resultSet.getInt(1);
+            		creator = resultSet.getString(6);
+                	
+                	
+                	if(type.equals("Book"))
+                	{
+                		pages = resultSet.getInt(7);
+                		Book copy = new Book(id, creator, pages, available, date);
+                		manager.addCopy(copy);
+                	} else
+                	{
+                		duration = resultSet.getInt(7);
+                		Movie copy = new Movie(id, creator, duration, available, date);
+                		manager.addCopy(copy);
+                	}
+                	
+                	
         		}
-            	
             }
             stmt.close();
             loanStmt.close();
@@ -193,6 +219,7 @@ public class DbConnection {
 		}
 	}
 
+	
 	public void initUsers(UserManager manager) 
 	{
 		String sql = "select * from view_non_admin";

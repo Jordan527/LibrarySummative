@@ -4,6 +4,7 @@ import items.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.stream.FileImageInputStream;
@@ -16,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -30,6 +32,8 @@ public class HomeController {
 	public Label moviesLabel;
 	@FXML
 	public MenuButton settingsButton;
+	@FXML
+	public TextField searchField;
 	
 	public MainController controller;
 	public SceneController sceneController = new SceneController();
@@ -52,7 +56,6 @@ public class HomeController {
 		
 		addItems();
 	}
-
 
 	public void setupAdmin()
 	{
@@ -157,7 +160,14 @@ public class HomeController {
 		}
 	}
 	
-
+	public void Search(ActionEvent event) throws Exception
+	{
+		String text = searchField.getText();
+		controller.searchItem(text);
+		sceneController.loadController(controller);
+		sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
+	}
+	
 	public ImageView loadImage(String source)
 	{
 		FileInputStream inputStream = null;
