@@ -36,6 +36,7 @@ public class MainController {
 		if(library.opened)
 		{
 			library.initItems(itemManager);
+			login("Yorudan", "root");
 			initialised = true;
 		}
 		library.disconnect();

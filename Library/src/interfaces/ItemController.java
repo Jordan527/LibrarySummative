@@ -55,10 +55,7 @@ public class ItemController {
 	{
 		this.controller = controller;
 		this.item = controller.getItem();
-		if(controller.user != null)
-		{
-			controller.settingsButtonSetup(settingsButton, true, true);
-		}
+		controller.settingsButtonSetup(settingsButton, true, true);
 		displayItem();
 		
 	}

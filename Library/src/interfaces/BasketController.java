@@ -444,8 +444,15 @@ public class BasketController {
 		if(controller.getUser().getIntAccess() > 0)	
 		{
 			controller.order();
+			controller.getBasket();
 			sceneController.loadController(controller);
-			sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
+			if(controller.getItemManager().getAll().size() > 0)
+			{
+				sceneController.switchToBasket((Stage) titleLabel.getScene().getWindow());
+			} else
+			{
+				sceneController.switchToLoaned((Stage) titleLabel.getScene().getWindow());
+			}
 		} else
 		{
 			double y = orderButton.getLayoutY();

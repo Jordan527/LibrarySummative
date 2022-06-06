@@ -27,7 +27,6 @@ public class Items {
 		setImage(image);
 		setGenre(genre);
 		setCost(cost);
-
 	}
 
 	public int getID() {

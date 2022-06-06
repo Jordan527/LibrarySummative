@@ -20,6 +20,7 @@ public class DbConnection {
 	Connection connection = null;
 	Statement stmt = null;
 	Statement loanStmt = null;
+	Statement prodStmt = null;
 	public Boolean opened = true;
 	
 	public DbConnection() {}
@@ -96,7 +97,7 @@ public class DbConnection {
         		manager.addItem(item);
         		
         		String sql2 = "call product_loaned(" + id + ")";
-        		ResultSet basket = loanStmt.executeQuery(sql2);
+        		ResultSet loaned = loanStmt.executeQuery(sql2);
         		
         
         		
@@ -104,10 +105,10 @@ public class DbConnection {
         		{
         			available = true;
         			date = null;
-        			if(basket.next())
+        			if(loaned.next())
         			{
         				available = false;
-        				Date copyDate = basket.getDate(1);
+        				Date copyDate = loaned.getDate(1);
         				date = simpleDateFormat.format(copyDate);
         			}
             		id = resultSet.getInt(1);
@@ -125,8 +126,6 @@ public class DbConnection {
                 		Movie copy = new Movie(id, creator, duration, available, date);
                 		manager.addCopy(copy);
                 	}
-                	
-                	
         		}
             }
             stmt.close();
@@ -177,7 +176,7 @@ public class DbConnection {
         		manager.addItem(item);
         		
         		String sql2 = "call product_loaned(" + id + ")";
-        		ResultSet basket = loanStmt.executeQuery(sql2);
+        		ResultSet loaned = loanStmt.executeQuery(sql2);
         		
         
         		
@@ -185,10 +184,10 @@ public class DbConnection {
         		{
         			available = true;
         			date = null;
-        			if(basket.next())
+        			if(loaned.next())
         			{
         				available = false;
-        				Date copyDate = basket.getDate(1);
+        				Date copyDate = loaned.getDate(1);
         				date = simpleDateFormat.format(copyDate);
         			}
             		id = resultSet.getInt(1);
@@ -533,26 +532,52 @@ public class DbConnection {
 				
 	            // create statement
 	            stmt = connection.createStatement();
+	            loanStmt = connection.createStatement();
+	            prodStmt = connection.createStatement();
+	            
+	            String sql2;
+	            ResultSet loaned;
+	            String sql3;
+	            ResultSet prodQuant;
 	            
 	            for (Items item : manager.getAll())
 	            {
 	            	int itemID = item.getID();
-	            	
+	        		sql2 = "call quantity_product_loaned(" + itemID + ")";
+	        		loaned = loanStmt.executeQuery(sql2);
+	        		
+	        		sql3 = "call product_quantity(" + itemID + ")";
+	        		prodQuant = prodStmt.executeQuery(sql3);
+	        		
+	        		prodQuant.next();
+	        		loaned.next();
+	        		
+	        		int totalQuantity = prodQuant.getInt(1);
+	        		int loanedQuantity = loaned.getInt(1);
+
 	            	for(int i = 0; i < item.getQuantity(); i ++)
 	            	{
-		            	String sql = "call library.add_loaned(";
-			            
-			            sql += "\"" + itemID + "\"";
-			            sql += "," + "\"" + userID + "\"";
-			            sql += "," + "\"" + date + "\"" + ");";
+	            		if(totalQuantity - loanedQuantity > 0)
+	            		{
+	            			String sql = "call library.add_loaned(";
+				            
+				            sql += "\"" + itemID + "\"";
+				            sql += "," + "\"" + userID + "\"";
+				            sql += "," + "\"" + date + "\"" + ");";
 
-			            // execute queries
-			            stmt.executeUpdate(sql); 
+				            // execute queries
+				            stmt.executeUpdate(sql); 
+				            
+				            loanedQuantity += 1;
+	            		}
+		            	
 	            	}
 
 	            }
 	            
 	            stmt.close();
+	            loanStmt.close();
+	            prodStmt.close();
 			}
 			catch (SQLException sqlE)
 			{
@@ -607,7 +632,9 @@ public class DbConnection {
 	        		manager.addItem(item);
 	        		
 	        		String sql2 = "call product_loaned(" + id + ")";
-	        		ResultSet laoned = loanStmt.executeQuery(sql2);
+	        		ResultSet loaned = loanStmt.executeQuery(sql2);
+	        		
+	        		
 	        		
 	        		if(type == 1)
 	        		{
@@ -615,10 +642,10 @@ public class DbConnection {
 		        		{
 		        			available = true;
 		        			date = null;
-		        			if(laoned.next())
+		        			if(loaned.next())
 		        			{
 		        				available = false;
-		        				Date copyDate = laoned.getDate(1);
+		        				Date copyDate = loaned.getDate(1);
 		        				date = simpleDateFormat.format(copyDate);
 		        			}
 		            		id = resultSet.getInt(1);
@@ -633,10 +660,10 @@ public class DbConnection {
 	            		{
 	            			available = true;
 	            			date = null;
-	            			if(laoned.next())
+	            			if(loaned.next())
 	            			{
 	            				available = false;
-	            				Date copyDate = laoned.getDate(1);
+	            				Date copyDate = loaned.getDate(1);
 	            				date = simpleDateFormat.format(copyDate);
 	            			}
 	    	        		id = resultSet.getInt(1);
