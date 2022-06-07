@@ -12,17 +12,6 @@
 	-fx-text-fill: #333333;
 }
 
-#ItemPane
-{
-	fx-width: 100px;
-	fx-height: 155px;
-}
-
-#ItemPane:hover
-{
-	-fx-background-color: LightBlue;
-}
-
 #itemHeader
 {
 	-fx-font-weight: bold;
