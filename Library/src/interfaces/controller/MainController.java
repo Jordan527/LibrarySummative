@@ -36,9 +36,6 @@ public class MainController {
 		if(library.opened)
 		{
 			library.initItems(itemManager);
-			login("Yorudan", "root");
-//			login("Balonduz", "law");
-//			login("Tesla", "Cars");
 			initialised = true;
 		}
 		library.disconnect();
