@@ -181,6 +181,7 @@ public class UserController {
 	{
 		controller.verifyUser(user.getID());
 		userAccess.setText(user.getAccess());
+		verifyButton.setVisible(false);
 	}
 	
 	public void Delete(ActionEvent event) throws Exception

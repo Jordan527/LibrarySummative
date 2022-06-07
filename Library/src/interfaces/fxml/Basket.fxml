@@ -3,14 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="500.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.BasketController">
    <children>
       <Label fx:id="titleLabel" layoutX="22.0" layoutY="46.0" text="Basket" />
-      <MenuButton fx:id="settingsButton" layoutX="263.0" layoutY="10.0" mnemonicParsing="false" text="Settings">
+      <MenuButton fx:id="settingsButton" layoutX="381.0" layoutY="10.0" mnemonicParsing="false" text="Settings">
         <items>
         </items>
       </MenuButton>

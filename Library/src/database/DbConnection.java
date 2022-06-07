@@ -122,7 +122,7 @@ public class DbConnection {
                 		manager.addCopy(copy);
                 	} else
                 	{
-                		duration = resultSet.getInt(7);
+                		duration = resultSet.getDouble(7);
                 		Movie copy = new Movie(id, creator, duration, available, date);
                 		manager.addCopy(copy);
                 	}
@@ -524,7 +524,7 @@ public class DbConnection {
 			    
 			    Calendar c = Calendar.getInstance();
 		        c.setTime(currentDate);
-		        c.add(Calendar.DATE, 30);
+		        c.add(Calendar.MONTH, 1);
 		        
 		        Date rawDate = c.getTime();
 			    String date = formatter.format(rawDate);

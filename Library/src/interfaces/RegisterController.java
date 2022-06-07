@@ -83,6 +83,10 @@ public class RegisterController
 					sceneController.loadController(controller);
 					sceneController.switchToHome((Stage) titleLabel.getScene().getWindow());
 				}
+				else
+				{
+					outputMessage = "\nA user with these details already exists";
+				}
 			} else
 			{
 				outputMessage = "\nPasswords do not match";
