@@ -37,11 +37,22 @@ public class MainController {
 		{
 			library.initItems(itemManager);
 			login("Yorudan", "root");
+//			login("Balonduz", "law");
+//			login("Tesla", "Cars");
 			initialised = true;
 		}
 		library.disconnect();
 	}	
 	
+	public void drawItems() throws IOException
+	{
+		library.connect();
+		if(library.opened)
+		{
+			library.initItems(itemManager);
+		}
+		library.disconnect();
+	}
 	public void drawUsers()
 	{
 		library.connect();
@@ -263,6 +274,9 @@ public class MainController {
 	public void Logout() throws Exception
 	{
 		this.user = null;
+		this.itemManager.clearList();
+		this.userManager.clear();
+		this.drawItems();
 		sceneController.loadController(this);
 		sceneController.switchToHome(stage);
 	}
